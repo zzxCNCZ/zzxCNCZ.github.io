@@ -1,10 +1,15 @@
 ---
 title: 文件MD5
 date: 2017-11-22 15:15:28
+categories:
+- Java
 tags:
+- MD5
 ---
 
 *根据文件获取MD5
+
+<!--more-->
 ```javascript
   //获取单个文件的MD5的值
       public static String mD5(MultipartFile file)

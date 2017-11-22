@@ -1,7 +1,10 @@
 ---
 title: MultipartFile上传——使用详解
 date: 2017-11-22 14:59:54
+categories:
+- Java
 tags:
+- MultipartFile
 ---
 ##上传文件
 ```javascript
@@ -37,6 +40,7 @@ tags:
      
 ```
 ##上传文件到服务器（尚有问题，但可行）
+<!--more-->
 ```javascript
   public static message uploadFile(MultipartFile file, String url) {
   

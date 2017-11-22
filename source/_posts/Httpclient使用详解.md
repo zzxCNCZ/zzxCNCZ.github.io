@@ -2,10 +2,14 @@
 layout: w
 title: Httpclient使用详解
 date: 2017-11-22 14:35:08
+categories:
+- Java
 tags:
+- httpclient
 ---
 
 ##post请求
+<!--more-->
 ```javascript
   public static JSONObject sendSms(String imei, String app_id, JSONObject payload, String ttl, String priority, String publisher_id) {
           HttpClient httpclient = new DefaultHttpClient();
