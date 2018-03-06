@@ -76,7 +76,8 @@ theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
+##git@github.com:andybroker/andybroker.github.io.git  https://github.com/zzxCNCZ/zzxCNCZ.github.io.git
 deploy:
   type: git
-  repo: https://github.com/zzxCNCZ/zzxCNCZ.github.io.git
+  repo: git@github.com:zzxCNCZ/zzxCNCZ.github.io.git
   branch: master
