@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="SpringMVC,spring security," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="SpringMVC pom文件 springmvc配置 web.xml spring security配置 java代码">
+<meta name="keywords" content="SpringMVC,spring security">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringMVC配置及整合spring security">
+<meta property="og:url" content="http://yoursite.com/2017/11/30/SpringMVC配置及整合spring-security/index.html">
+<meta property="og:site_name" content="Zzx Blog">
+<meta property="og:description" content="SpringMVC pom文件 springmvc配置 web.xml spring security配置 java代码">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-30T01:30:13.553Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringMVC配置及整合spring security">
+<meta name="twitter:description" content="SpringMVC pom文件 springmvc配置 web.xml spring security配置 java代码">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/30/SpringMVC配置及整合spring-security/"/>
+
+
+
+
+
+  <title>SpringMVC配置及整合spring security | Zzx Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zzx Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Since 2017</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/30/SpringMVC配置及整合spring-security/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Banksys Zhuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zzx Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SpringMVC配置及整合spring security</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-30T08:36:11+08:00">
+                2017-11-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/SpringMVC/" itemprop="url" rel="index">
+                    <span itemprop="name">SpringMVC</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="SpringMVC"><a href="#SpringMVC" class="headerlink" title="SpringMVC"></a>SpringMVC</h2><ol>
+<li>pom文件</li>
+<li>springmvc配置</li>
+<li>web.xml</li>
+<li>spring security配置</li>
+<li><p>java代码 </p>
+<a id="more"></a>
+<ul>
+<li><p>pom文件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br></pre></td><td class="code"><pre><span class="line">&lt;project xmlns=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">         xsi:schemaLocation=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"</span>&gt;</span><br><span class="line">    &lt;modelVersion&gt;<span class="number">4.0</span><span class="number">.0</span>&lt;<span class="regexp">/modelVersion&gt;</span></span><br><span class="line"><span class="regexp">    &lt;groupId&gt;com.zzx&lt;/g</span>roupId&gt;</span><br><span class="line">    &lt;artifactId&gt;maven-springmvc&lt;<span class="regexp">/artifactId&gt;</span></span><br><span class="line"><span class="regexp">    &lt;packaging&gt;war&lt;/</span>packaging&gt;</span><br><span class="line">    &lt;version&gt;<span class="number">1.0</span>-SNAPSHOT&lt;<span class="regexp">/version&gt;</span></span><br><span class="line"><span class="regexp">    &lt;name&gt;maven-springmvc Maven Webapp&lt;/</span>name&gt;</span><br><span class="line">    &lt;url&gt;http:<span class="comment">//maven.apache.org&lt;/url&gt;</span></span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;junit&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;artifactId&gt;junit&lt;/</span>artifactId&gt;</span><br><span class="line">            &lt;version&gt;<span class="number">3.8</span><span class="number">.1</span>&lt;<span class="regexp">/version&gt;</span></span><br><span class="line"><span class="regexp">            &lt;scope&gt;test&lt;/</span>scope&gt;</span><br><span class="line">        &lt;<span class="regexp">/dependency&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">        &lt;!--logback--&gt;</span></span><br><span class="line"><span class="regexp">        &lt;dependency&gt;</span></span><br><span class="line"><span class="regexp">            &lt;groupId&gt;org.slf4j&lt;/g</span>roupId&gt;</span><br><span class="line">            &lt;artifactId&gt;slf4j-log4j12&lt;<span class="regexp">/artifactId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;version&gt;1.7.21&lt;/</span>version&gt;</span><br><span class="line">        &lt;<span class="regexp">/dependency&gt;</span></span><br><span class="line"><span class="regexp">        &lt;dependency&gt;</span></span><br><span class="line"><span class="regexp">            &lt;groupId&gt;org.slf4j&lt;/g</span>roupId&gt;</span><br><span class="line">            &lt;artifactId&gt;slf4j-api&lt;<span class="regexp">/artifactId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;version&gt;1.7.12&lt;/</span>version&gt;</span><br><span class="line">        &lt;<span class="regexp">/dependency&gt;</span></span><br><span class="line"><span class="regexp">        &lt;dependency&gt;</span></span><br><span class="line"><span class="regexp">            &lt;groupId&gt;ch.qos.logback&lt;/g</span>roupId&gt;</span><br><span class="line">            &lt;artifactId&gt;logback-classic&lt;<span class="regexp">/artifactId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;version&gt;1.1.3&lt;/</span>version&gt;</span><br><span class="line">            &lt;scope&gt;compile&lt;<span class="regexp">/scope&gt;</span></span><br><span class="line"><span class="regexp">            &lt;exclusions&gt;</span></span><br><span class="line"><span class="regexp">                &lt;exclusion&gt;</span></span><br><span class="line"><span class="regexp">                    &lt;artifactId&gt;slf4j-api&lt;/</span>artifactId&gt;</span><br><span class="line">                    &lt;groupId&gt;org.slf4j&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">                &lt;/</span>exclusion&gt;</span><br><span class="line">            &lt;<span class="regexp">/exclusions&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>dependency&gt;</span><br><span class="line"></span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;ch.qos.logback&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;artifactId&gt;logback-core&lt;/</span>artifactId&gt;</span><br><span class="line">            &lt;version&gt;<span class="number">1.1</span><span class="number">.3</span>&lt;<span class="regexp">/version&gt;</span></span><br><span class="line"><span class="regexp">            &lt;exclusions&gt;</span></span><br><span class="line"><span class="regexp">                &lt;exclusion&gt;</span></span><br><span class="line"><span class="regexp">                    &lt;groupId&gt;org.slf4j&lt;/g</span>roupId&gt;</span><br><span class="line">                    &lt;artifactId&gt;slf4j-api&lt;<span class="regexp">/artifactId&gt;</span></span><br><span class="line"><span class="regexp">                &lt;/</span>exclusion&gt;</span><br><span class="line">            &lt;<span class="regexp">/exclusions&gt;</span></span><br><span class="line"><span class="regexp">            &lt;scope&gt;compile&lt;/</span>scope&gt;</span><br><span class="line">        &lt;<span class="regexp">/dependency&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">        &lt;dependency&gt;</span></span><br><span class="line"><span class="regexp">            &lt;groupId&gt;ch.qos.logback&lt;/g</span>roupId&gt;</span><br><span class="line">            &lt;artifactId&gt;logback-access&lt;<span class="regexp">/artifactId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;version&gt;1.1.3&lt;/</span>version&gt;</span><br><span class="line">            &lt;exclusions&gt;</span><br><span class="line">                &lt;exclusion&gt;</span><br><span class="line">                    &lt;groupId&gt;org.slf4j&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">                    &lt;artifactId&gt;slf4j-api&lt;/</span>artifactId&gt;</span><br><span class="line">                &lt;<span class="regexp">/exclusion&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>exclusions&gt;</span><br><span class="line">            &lt;scope&gt;compile&lt;<span class="regexp">/scope&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>dependency&gt;</span><br><span class="line"></span><br><span class="line">        &lt;!--j2ee相关包 servlet、jsp、jstl--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;javax.servlet&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;artifactId&gt;javax.servlet-api&lt;/</span>artifactId&gt;</span><br><span class="line">            &lt;version&gt;<span class="number">3.1</span><span class="number">.0</span>&lt;<span class="regexp">/version&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;javax.servlet.jsp&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;artifactId&gt;jsp-api&lt;/</span>artifactId&gt;</span><br><span class="line">            &lt;version&gt;<span class="number">2.2</span>&lt;<span class="regexp">/version&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;javax.servlet&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;artifactId&gt;jstl&lt;/</span>artifactId&gt;</span><br><span class="line">            &lt;version&gt;<span class="number">1.2</span>&lt;<span class="regexp">/version&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>dependency&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &lt;!-- mybatis/spring包 --&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.mybatis&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;artifactId&gt;mybatis&lt;/</span>artifactId&gt;</span><br><span class="line">            &lt;version&gt;<span class="number">3.4</span><span class="number">.1</span>&lt;<span class="regexp">/version&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>dependency&gt;</span><br><span class="line"></span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.mybatis&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;artifactId&gt;mybatis-spring&lt;/</span>artifactId&gt;</span><br><span class="line">            &lt;version&gt;<span class="number">1.3</span><span class="number">.0</span>&lt;<span class="regexp">/version&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>dependency&gt;</span><br><span class="line"></span><br><span class="line">        &lt;!--mysql驱动包--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;mysql&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;artifactId&gt;mysql-connector-java&lt;/</span>artifactId&gt;</span><br><span class="line">            &lt;version&gt;<span class="number">5.1</span><span class="number">.35</span>&lt;<span class="regexp">/version&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>dependency&gt;</span><br><span class="line"></span><br><span class="line">        &lt;!-- Druid --&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;com.alibaba&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;artifactId&gt;druid&lt;/</span>artifactId&gt;</span><br><span class="line">            &lt;version&gt;<span class="number">1.0</span><span class="number">.26</span>&lt;<span class="regexp">/version&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>dependency&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &lt;!-- oracle driver --&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;com.oracle.driver&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;artifactId&gt;jdbc&lt;/</span>artifactId&gt;</span><br><span class="line">            &lt;version&gt;<span class="number">14</span>&lt;<span class="regexp">/version&gt;</span></span><br><span class="line"><span class="regexp">            &lt;scope&gt;runtime&lt;/</span>scope&gt;</span><br><span class="line">        &lt;<span class="regexp">/dependency&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">        &lt;!--spring相关包--&gt;</span></span><br><span class="line"><span class="regexp">        &lt;dependency&gt;</span></span><br><span class="line"><span class="regexp">            &lt;groupId&gt;org.springframework&lt;/g</span>roupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-web&lt;<span class="regexp">/artifactId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;version&gt;4.3.1.RELEASE&lt;/</span>version&gt;</span><br><span class="line">        &lt;<span class="regexp">/dependency&gt;</span></span><br><span class="line"><span class="regexp">        &lt;dependency&gt;</span></span><br><span class="line"><span class="regexp">            &lt;groupId&gt;org.springframework&lt;/g</span>roupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-webmvc&lt;<span class="regexp">/artifactId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;version&gt;4.3.1.RELEASE&lt;/</span>version&gt;</span><br><span class="line">        &lt;<span class="regexp">/dependency&gt;</span></span><br><span class="line"><span class="regexp">        &lt;!--spring-security--&gt;</span></span><br><span class="line"><span class="regexp">        &lt;dependency&gt;</span></span><br><span class="line"><span class="regexp">            &lt;groupId&gt;org.springframework.security&lt;/g</span>roupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-security-web&lt;<span class="regexp">/artifactId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;version&gt;4.1.2.RELEASE&lt;/</span>version&gt;</span><br><span class="line">        &lt;<span class="regexp">/dependency&gt;</span></span><br><span class="line"><span class="regexp">        &lt;dependency&gt;</span></span><br><span class="line"><span class="regexp">            &lt;groupId&gt;org.springframework.security&lt;/g</span>roupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-security-config&lt;<span class="regexp">/artifactId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;version&gt;4.1.2.RELEASE&lt;/</span>version&gt;</span><br><span class="line">        &lt;<span class="regexp">/dependency&gt;</span></span><br><span class="line"><span class="regexp">        &lt;dependency&gt;</span></span><br><span class="line"><span class="regexp">            &lt;groupId&gt;org.springframework.security&lt;/g</span>roupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-security-taglibs&lt;<span class="regexp">/artifactId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;version&gt;4.1.2.RELEASE&lt;/</span>version&gt;</span><br><span class="line">        &lt;<span class="regexp">/dependency&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">        &lt;!--其他需要的包--&gt;</span></span><br><span class="line"><span class="regexp">        &lt;dependency&gt;</span></span><br><span class="line"><span class="regexp">            &lt;groupId&gt;org.apache.commons&lt;/g</span>roupId&gt;</span><br><span class="line">            &lt;artifactId&gt;commons-lang3&lt;<span class="regexp">/artifactId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;version&gt;3.4&lt;/</span>version&gt;</span><br><span class="line">        &lt;<span class="regexp">/dependency&gt;</span></span><br><span class="line"><span class="regexp">        &lt;dependency&gt;</span></span><br><span class="line"><span class="regexp">            &lt;groupId&gt;commons-fileupload&lt;/g</span>roupId&gt;</span><br><span class="line">            &lt;artifactId&gt;commons-fileupload&lt;<span class="regexp">/artifactId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;version&gt;1.3.1&lt;/</span>version&gt;</span><br><span class="line">        &lt;<span class="regexp">/dependency&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>dependencies&gt;</span><br><span class="line">    &lt;build&gt;</span><br><span class="line">        &lt;finalName&gt;maven-springmvc&lt;<span class="regexp">/finalName&gt;</span></span><br><span class="line"><span class="regexp">        &lt;resources&gt;</span></span><br><span class="line"><span class="regexp">            &lt;!--表示把java目录下的有关xml文件,properties文件编译/</span>打包的时候放在resource目录下--&gt;</span><br><span class="line">            &lt;resource&gt;</span><br><span class="line">                &lt;directory&gt;$&#123;basedir&#125;/src/main/java&lt;<span class="regexp">/directory&gt;</span></span><br><span class="line"><span class="regexp">                &lt;includes&gt;</span></span><br><span class="line"><span class="regexp">                    &lt;include&gt;**/</span>*.properties&lt;<span class="regexp">/include&gt;</span></span><br><span class="line"><span class="regexp">                    &lt;include&gt;**/</span>*.xml&lt;<span class="regexp">/include&gt;</span></span><br><span class="line"><span class="regexp">                &lt;/i</span>ncludes&gt;</span><br><span class="line">            &lt;<span class="regexp">/resource&gt;</span></span><br><span class="line"><span class="regexp">            &lt;resource&gt;</span></span><br><span class="line"><span class="regexp">                &lt;directory&gt;$&#123;basedir&#125;/</span>src/main/resources&lt;<span class="regexp">/directory&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>resource&gt;</span><br><span class="line">        &lt;<span class="regexp">/resources&gt;</span></span><br><span class="line"><span class="regexp">        &lt;plugins&gt;</span></span><br><span class="line"><span class="regexp">            &lt;!--servlet容器 jetty插件--&gt;</span></span><br><span class="line"><span class="regexp">            &lt;plugin&gt;</span></span><br><span class="line"><span class="regexp">                &lt;groupId&gt;org.eclipse.jetty&lt;/g</span>roupId&gt;</span><br><span class="line">                &lt;artifactId&gt;jetty-maven-plugin&lt;<span class="regexp">/artifactId&gt;</span></span><br><span class="line"><span class="regexp">                &lt;version&gt;9.3.10.v20160621&lt;/</span>version&gt;</span><br><span class="line">            &lt;<span class="regexp">/plugin&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">            &lt;!--mybatis 逆向生成插件--&gt;</span></span><br><span class="line"><span class="regexp">            &lt;plugin&gt;</span></span><br><span class="line"><span class="regexp">                &lt;groupId&gt;org.mybatis.generator&lt;/g</span>roupId&gt;</span><br><span class="line">                &lt;artifactId&gt;mybatis-generator-maven-plugin&lt;<span class="regexp">/artifactId&gt;</span></span><br><span class="line"><span class="regexp">                &lt;version&gt;1.3.2&lt;/</span>version&gt;</span><br><span class="line">                &lt;configuration&gt;</span><br><span class="line">                    &lt;configurationFile&gt;src/main/resources/generatorConfig.xml&lt;<span class="regexp">/configurationFile&gt;</span></span><br><span class="line"><span class="regexp">                    &lt;verbose&gt;true&lt;/</span>verbose&gt;</span><br><span class="line">                    &lt;overwrite&gt;<span class="literal">true</span>&lt;<span class="regexp">/overwrite&gt;</span></span><br><span class="line"><span class="regexp">                &lt;/</span>configuration&gt;</span><br><span class="line">                &lt;executions&gt;</span><br><span class="line">                    &lt;execution&gt;</span><br><span class="line">                        &lt;id&gt;Generate MyBatis Artifacts&lt;<span class="regexp">/id&gt;</span></span><br><span class="line"><span class="regexp">                    &lt;/</span>execution&gt;</span><br><span class="line">                &lt;<span class="regexp">/executions&gt;</span></span><br><span class="line"><span class="regexp">                &lt;dependencies&gt;</span></span><br><span class="line"><span class="regexp">                    &lt;dependency&gt;</span></span><br><span class="line"><span class="regexp">                        &lt;groupId&gt;org.mybatis.generator&lt;/g</span>roupId&gt;</span><br><span class="line">                        &lt;artifactId&gt;mybatis-generator-core&lt;<span class="regexp">/artifactId&gt;</span></span><br><span class="line"><span class="regexp">                        &lt;version&gt;1.3.2&lt;/</span>version&gt;</span><br><span class="line">                    &lt;<span class="regexp">/dependency&gt;</span></span><br><span class="line"><span class="regexp">                &lt;/</span>dependencies&gt;</span><br><span class="line">            &lt;<span class="regexp">/plugin&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>plugins&gt;</span><br><span class="line">    &lt;<span class="regexp">/build&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>project&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>web.xml</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line">&lt;web-app xmlns=<span class="string">"http://java.sun.com/xml/ns/javaee"</span></span><br><span class="line">        xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">        xsi:schemaLocation=<span class="string">"http://java.sun.com/xml/ns/javaee</span></span><br><span class="line"><span class="string">         http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"</span></span><br><span class="line">        version=<span class="string">"3.0"</span>&gt;</span><br><span class="line">   &lt;!--session-config --&gt;</span><br><span class="line">   &lt;session-config&gt;</span><br><span class="line">       &lt;session-timeout&gt;<span class="number">1</span>&lt;<span class="regexp">/session-timeout&gt;</span></span><br><span class="line"><span class="regexp">   &lt;/</span>session-config&gt;</span><br><span class="line"></span><br><span class="line">   &lt;!--welcome pages--&gt;</span><br><span class="line">   &lt;welcome-file-list&gt;</span><br><span class="line">       &lt;welcome-file&gt;login.jsp&lt;<span class="regexp">/welcome-file&gt;</span></span><br><span class="line"><span class="regexp">   &lt;/</span>welcome-file-list&gt;</span><br><span class="line"></span><br><span class="line">   &lt;!--logback begin--&gt;</span><br><span class="line">   &lt;context-param&gt;</span><br><span class="line">       &lt;param-name&gt;logbackConfigLocation&lt;<span class="regexp">/param-name&gt;</span></span><br><span class="line"><span class="regexp">       &lt;param-value&gt;classpath:/</span>logback.xml&lt;<span class="regexp">/param-value&gt;</span></span><br><span class="line"><span class="regexp">   &lt;/</span>context-param&gt;</span><br><span class="line">   &lt;listener&gt;</span><br><span class="line">       &lt;listener-<span class="class"><span class="keyword">class</span>&gt;<span class="title">com</span>.<span class="title">example</span>.<span class="title">util</span>.<span class="title">LogbackConfigListener</span>&lt;/<span class="title">listener</span>-<span class="title">class</span>&gt;</span></span><br><span class="line"><span class="class">   &lt;/<span class="title">listener</span>&gt;</span></span><br><span class="line"><span class="class"> &lt;!--<span class="title">logback</span> <span class="title">end</span>--&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">   &lt;!-- <span class="title">Creates</span> <span class="title">the</span> <span class="title">Spring</span> <span class="title">Container</span> <span class="title">shared</span> <span class="title">by</span> <span class="title">all</span> <span class="title">Servlets</span> <span class="title">and</span> <span class="title">Filters</span> --&gt;</span></span><br><span class="line"><span class="class">   &lt;<span class="title">listener</span>&gt;</span></span><br><span class="line"><span class="class">       &lt;<span class="title">listener</span>-<span class="title">class</span>&gt;<span class="title">org</span>.<span class="title">springframework</span>.<span class="title">web</span>.<span class="title">context</span>.<span class="title">ContextLoaderListener</span>&lt;/<span class="title">listener</span>-<span class="title">class</span>&gt;</span></span><br><span class="line"><span class="class">   &lt;/<span class="title">listener</span>&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">   &lt;!--限制用户登录端口数 <span class="title">Spring</span> <span class="title">security</span> 模块--&gt;</span></span><br><span class="line"><span class="class">   &lt;<span class="title">listener</span>&gt;</span></span><br><span class="line"><span class="class">       &lt;<span class="title">listener</span>-<span class="title">class</span>&gt;<span class="title">org</span>.<span class="title">springframework</span>.<span class="title">security</span>.<span class="title">web</span>.<span class="title">session</span>.<span class="title">HttpSessionEventPublisher</span>&lt;/<span class="title">listener</span>-<span class="title">class</span>&gt;</span></span><br><span class="line"><span class="class">   &lt;/<span class="title">listener</span>&gt;</span></span><br><span class="line"><span class="class">   &lt;!-- <span class="title">Spring</span> <span class="title">Security</span> <span class="title">begin</span> --&gt;</span></span><br><span class="line"><span class="class">   &lt;<span class="title">context</span>-<span class="title">param</span>&gt;</span></span><br><span class="line"><span class="class">       &lt;<span class="title">param</span>-<span class="title">name</span>&gt;<span class="title">contextConfigLocation</span>&lt;/<span class="title">param</span>-<span class="title">name</span>&gt;</span></span><br><span class="line">       &lt;param-value&gt;classpath:spring/spring-security.xml&lt;/param-value&gt;</span><br><span class="line">   &lt;<span class="regexp">/context-param&gt;</span></span><br><span class="line"><span class="regexp">   &lt;!-- 用户权限模块 --&gt;</span></span><br><span class="line"><span class="regexp">   &lt;filter&gt;</span></span><br><span class="line"><span class="regexp">       &lt;filter-name&gt;springSecurityFilterChain&lt;/</span>filter-name&gt;</span><br><span class="line">       &lt;filter-<span class="class"><span class="keyword">class</span>&gt;<span class="title">org</span>.<span class="title">springframework</span>.<span class="title">web</span>.<span class="title">filter</span>.<span class="title">DelegatingFilterProxy</span>&lt;/<span class="title">filter</span>-<span class="title">class</span>&gt;</span></span><br><span class="line"><span class="class">   &lt;/<span class="title">filter</span>&gt;</span></span><br><span class="line"><span class="class">   &lt;<span class="title">filter</span>-<span class="title">mapping</span>&gt;</span></span><br><span class="line"><span class="class">       &lt;<span class="title">filter</span>-<span class="title">name</span>&gt;<span class="title">springSecurityFilterChain</span>&lt;/<span class="title">filter</span>-<span class="title">name</span>&gt;</span></span><br><span class="line"><span class="class">       &lt;<span class="title">url</span>-<span class="title">pattern</span>&gt;/*&lt;/<span class="title">url</span>-<span class="title">pattern</span>&gt;</span></span><br><span class="line"><span class="class">   &lt;/<span class="title">filter</span>-<span class="title">mapping</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;!-- <span class="title">Spring</span> <span class="title">Security</span> <span class="title">end</span> --&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">   &lt;!--配置<span class="title">springmvc</span> <span class="title">DispatcherServlet</span>--&gt;</span></span><br><span class="line"><span class="class">   &lt;<span class="title">servlet</span>&gt;</span></span><br><span class="line"><span class="class">       &lt;<span class="title">servlet</span>-<span class="title">name</span>&gt;<span class="title">springMVC</span>&lt;/<span class="title">servlet</span>-<span class="title">name</span>&gt;</span></span><br><span class="line"><span class="class">       &lt;<span class="title">servlet</span>-<span class="title">class</span>&gt;<span class="title">org</span>.<span class="title">springframework</span>.<span class="title">web</span>.<span class="title">servlet</span>.<span class="title">DispatcherServlet</span>&lt;/<span class="title">servlet</span>-<span class="title">class</span>&gt;</span></span><br><span class="line"><span class="class">       &lt;<span class="title">init</span>-<span class="title">param</span>&gt;</span></span><br><span class="line"><span class="class">           &lt;!--<span class="title">Sources</span>标注的文件夹下需要新建一个<span class="title">spring</span>文件夹--&gt;</span></span><br><span class="line"><span class="class">           &lt;<span class="title">param</span>-<span class="title">name</span>&gt;<span class="title">contextConfigLocation</span>&lt;/<span class="title">param</span>-<span class="title">name</span>&gt;</span></span><br><span class="line"><span class="class">           &lt;<span class="title">param</span>-<span class="title">value</span>&gt;</span></span><br><span class="line">               classpath:spring/spring-mvc.xml</span><br><span class="line">               classpath:spring/spring-mybatis-beans.xml</span><br><span class="line">           &lt;<span class="regexp">/param-value&gt;</span></span><br><span class="line"><span class="regexp">       &lt;/i</span>nit-param&gt;</span><br><span class="line">       &lt;load-on-startup&gt;<span class="number">1</span>&lt;<span class="regexp">/load-on-startup&gt;</span></span><br><span class="line"><span class="regexp">       &lt;async-supported&gt;true&lt;/</span><span class="keyword">async</span>-supported&gt;</span><br><span class="line">   &lt;<span class="regexp">/servlet&gt;</span></span><br><span class="line"><span class="regexp">   &lt;servlet-mapping&gt;</span></span><br><span class="line"><span class="regexp">       &lt;servlet-name&gt;springMVC&lt;/</span>servlet-name&gt;</span><br><span class="line">       &lt;url-pattern&gt;<span class="regexp">/&lt;/u</span>rl-pattern&gt;</span><br><span class="line">   &lt;<span class="regexp">/servlet-mapping&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>web-app&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="springMVC"><a href="#springMVC" class="headerlink" title="springMVC"></a>springMVC</h2><ul>
+<li>配置文件<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line">&lt;beans xmlns=<span class="string">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">       xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">       xmlns:context=<span class="string">"http://www.springframework.org/schema/context"</span></span><br><span class="line">       xmlns:mvc=<span class="string">"http://www.springframework.org/schema/mvc"</span></span><br><span class="line">       xsi:schemaLocation=<span class="string">"http://www.springframework.org/schema/beans</span></span><br><span class="line"><span class="string">                        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd</span></span><br><span class="line"><span class="string">                         http://www.springframework.org/schema/context</span></span><br><span class="line"><span class="string">                        http://www.springframework.org/schema/context/spring-context-3.2.xsd</span></span><br><span class="line"><span class="string">                        http://www.springframework.org/schema/mvc</span></span><br><span class="line"><span class="string">                        http://www.springframework.org/schema/mvc/spring-mvc.xsd"</span>&gt;</span><br><span class="line">    &lt;!--启用spring的一些annotation --&gt;</span><br><span class="line">    &lt;context:annotation-config/&gt;</span><br><span class="line">    &lt;!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 --&gt;</span><br><span class="line">    &lt;context:component-scan base-package=<span class="string">"com.example"</span>&gt;</span><br><span class="line">        &lt;context:include-filter type=<span class="string">"annotation"</span> expression=<span class="string">"org.springframework.stereotype.Controller"</span>/&gt;</span><br><span class="line">    &lt;<span class="regexp">/context:component-scan&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">    &lt;!--HandlerMapping 无需配置，springmvc可以默认启动--&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">    &lt;!--静态资源映射--&gt;</span></span><br><span class="line"><span class="regexp">    &lt;!--本项目把静态资源放在了WEB-INF的statics目录下，资源映射如下--&gt;</span></span><br><span class="line"><span class="regexp">    &lt;mvc:resources mapping="/</span>css<span class="comment">/**" location="/WEB-INF/statics/css/"/&gt;</span></span><br><span class="line"><span class="comment">    &lt;mvc:resources mapping="/js/**" location="/WEB-INF/statics/js/"/&gt;</span></span><br><span class="line"><span class="comment">    &lt;mvc:resources mapping="/image/**" location="/WEB-INF/statics/image/"/&gt;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    &lt;!--但是项目部署到linux下发现WEB-INF的静态资源会出现无法解析的情况，但是本地tomcat访问正常，因此建议还是直接把静态资源放在webapp的statics下，映射配置如下--&gt;</span></span><br><span class="line"><span class="comment">    &lt;!--&lt;mvc:resources mapping="/css/**" location="/statics/css/"/&gt;--&gt;</span></span><br><span class="line"><span class="comment">    &lt;!--&lt;mvc:resources mapping="/js/**" location="/statics/js/"/&gt;--&gt;</span></span><br><span class="line"><span class="comment">    &lt;!--&lt;mvc:resources mapping="/image/**" location="/statics/images/"/&gt;--&gt;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    &lt;!-- 配置注解驱动 可以将request参数与绑定到controller参数上 --&gt;</span></span><br><span class="line"><span class="comment">    &lt;mvc:annotation-driven/&gt;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    &lt;!-- 对模型视图名称的解析，即在模型视图名称添加前后缀(如果最后一个还是表示文件夹,则最后的斜杠不要漏了) 使用JSP--&gt;</span></span><br><span class="line"><span class="comment">    &lt;!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- --&gt;</span></span><br><span class="line"><span class="comment">    &lt;bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"&gt;</span></span><br><span class="line"><span class="comment">        &lt;property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/&gt;</span></span><br><span class="line"><span class="comment">        &lt;property name="prefix" value="/WEB-INF/views/"/&gt;&lt;!--设置JSP文件的目录位置--&gt;</span></span><br><span class="line"><span class="comment">        &lt;property name="suffix" value=".jsp"/&gt;</span></span><br><span class="line"><span class="comment">    &lt;/bean&gt;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    &lt;!-- springmvc文件上传需要配置的节点--&gt;</span></span><br><span class="line"><span class="comment">    &lt;bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"&gt;</span></span><br><span class="line"><span class="comment">        &lt;property name="maxUploadSize" value="20971500"/&gt;</span></span><br><span class="line"><span class="comment">        &lt;property name="defaultEncoding" value="UTF-8"/&gt;</span></span><br><span class="line"><span class="comment">        &lt;property name="resolveLazily" value="true"/&gt;</span></span><br><span class="line"><span class="comment">    &lt;/bean&gt;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    &lt;!-- 设置使用注解的类所在的jar包 --&gt;</span></span><br><span class="line"><span class="comment">    &lt;context:component-scan base-package="com.example.security"&gt;&lt;/context:component-scan&gt;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    &lt;!--载入配置文件--&gt;</span></span><br><span class="line"><span class="comment">    &lt;context:property-placeholder location="classpath:db/jdbc.properties"/&gt;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">&lt;/beans&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="整合Sping-Security"><a href="#整合Sping-Security" class="headerlink" title="整合Sping Security"></a>整合Sping Security</h2><ul>
+<li>配置文件<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans xmlns=<span class="string">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">       xmlns:security=<span class="string">"http://www.springframework.org/schema/security"</span></span><br><span class="line">       xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">       xsi:schemaLocation=<span class="string">"http://www.springframework.org/schema/beans</span></span><br><span class="line"><span class="string">          http://www.springframework.org/schema/beans/spring-beans.xsd</span></span><br><span class="line"><span class="string">          http://www.springframework.org/schema/security</span></span><br><span class="line"><span class="string">          http://www.springframework.org/schema/security/spring-security.xsd"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--需要过滤不被拦截的请求--&gt;</span><br><span class="line">    &lt;security:http pattern=<span class="string">"/user/loginPage"</span> security=<span class="string">"none"</span>/&gt;</span><br><span class="line">    &lt;security:http pattern=<span class="string">"/user/sessiontimeout"</span> security=<span class="string">"none"</span>/&gt;</span><br><span class="line">    &lt;security:http pattern=<span class="string">"/sessiontimeout.jsp"</span> security=<span class="string">"none"</span>/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--权限控制 hasRole(<span class="string">'ROLE_USER'</span>) --&gt;</span><br><span class="line">    &lt;security:http auto-config=<span class="string">"true"</span> use-expressions=<span class="string">"true"</span>&gt;</span><br><span class="line">        &lt;security:intercept-url pattern=<span class="string">"/**"</span> access=<span class="string">"hasRole('ROLE_USER')"</span>/&gt;</span><br><span class="line">        &lt;!--登陆页面配置，登陆成功页面login-page=<span class="string">"/user/loginPage"</span>，error页面<span class="string">"/user/loginPage?error=error"</span></span><br><span class="line">        --&gt;</span><br><span class="line">        &lt;security:form-login login-page=<span class="string">"/user/loginPage"</span> authentication-failure-url=<span class="string">"/user/loginPage?error=error"</span></span><br><span class="line">                             <span class="keyword">default</span>-target-url=<span class="string">"/user/index"</span> login-processing-url=<span class="string">"/login"</span>/&gt;</span><br><span class="line">          &lt;!--logout控制--&gt;</span><br><span class="line">        &lt;security:logout invalidate-session=<span class="string">"true"</span> logout-success-url=<span class="string">"/user/loginPage"</span> logout-url=<span class="string">"/logout"</span>/&gt;</span><br><span class="line">          &lt;!--session控制--&gt;</span><br><span class="line">        &lt;security:session-management invalid-session-url=<span class="string">"/user/sessiontimeout"</span></span><br><span class="line">                                     session-authentication-error-url=<span class="string">"/sessiontimeout.jsp"</span>&gt;</span><br><span class="line">            &lt;!-- session-authentication-error-url当有remember_me功能时使用--&gt;</span><br><span class="line">            &lt;!--限制同一用户在应用中同时允许存在的已经通过认证的session数量。这个值默认是<span class="number">1</span>，可以通过concurrency-control元素的max-sessions属性来指定--&gt;</span><br><span class="line">            &lt;security:concurrency-control error-<span class="keyword">if</span>-maximum-exceeded=<span class="string">"true"</span></span><br><span class="line">                                          max-sessions=<span class="string">"1"</span> expired-url=<span class="string">"/sessiontimeout.jsp"</span>/&gt;</span><br><span class="line">        &lt;<span class="regexp">/security:session-management&gt;</span></span><br><span class="line"><span class="regexp">        &lt;!-- 退出登录时删除session对应的cookie --&gt;</span></span><br><span class="line"><span class="regexp">        &lt;security:logout delete-cookies="JSESSIONID"/</span>&gt;</span><br><span class="line">        &lt;security:csrf disabled=<span class="string">"true"</span>/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;<span class="regexp">/security:http&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">    &lt;!--beans--&gt;</span></span><br><span class="line"><span class="regexp">    &lt;bean id="loginUserDetailService" class="com.example.security.impl.LoginUserDetailsServiceImpl"&gt;&lt;/</span>bean&gt;</span><br><span class="line">    &lt;bean id=<span class="string">"loginAuthenticationProvider"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"com.example.security.LoginAuthenticationProvider"</span>&gt;</span><br><span class="line">        &lt;property name=<span class="string">"userDetailsService"</span> ref=<span class="string">"loginUserDetailService"</span>&gt;&lt;/property&gt;</span><br><span class="line">    &lt;<span class="regexp">/bean&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">    &lt;security:authentication-manager alias="myAuthenticationManager"&gt;</span></span><br><span class="line"><span class="regexp">        &lt;security:authentication-provider ref="loginAuthenticationProvider"&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>security:authentication-provider&gt;</span><br><span class="line">    &lt;<span class="regexp">/security:authentication-manager&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>beans&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="java代码"><a href="#java代码" class="headerlink" title="java代码"></a>java代码</h2><ul>
+<li>LoginAuthenticationProvider<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br></pre></td><td class="code"><pre><span class="line">package com.example.security;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @Author:Zhuang zexin</span></span><br><span class="line"><span class="comment">* @Description:</span></span><br><span class="line"><span class="comment">* @Date:Created in 下午 4:53 2017-11-24 0024</span></span><br><span class="line"><span class="comment">* @Modified By:</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">import</span> org.springframework.security.authentication.AuthenticationServiceException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.authentication.BadCredentialsException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.authentication.UsernamePasswordAuthenticationToken;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.authentication.dao.SaltSource;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.authentication.encoding.PasswordEncoder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.authentication.encoding.PlaintextPasswordEncoder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.AuthenticationException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UserDetails;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UsernameNotFoundException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.util.Assert;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 重写DaoAuthenticationProvider的验证方法</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">LoginAuthenticationProvider</span> <span class="keyword">extends</span> <span class="title">AbstractUserDetailsAuthenticationProvider</span> </span>&#123;</span><br><span class="line">  private PasswordEncoder passwordEncoder = <span class="keyword">new</span> PlaintextPasswordEncoder();</span><br><span class="line"></span><br><span class="line">  private SaltSource saltSource;</span><br><span class="line"></span><br><span class="line">  private LoginUserDetailsService userDetailsService;</span><br><span class="line"></span><br><span class="line">  protected <span class="keyword">void</span> additionalAuthenticationChecks(UserDetails userDetails,</span><br><span class="line">                                                UsernamePasswordAuthenticationToken authentication)</span><br><span class="line">          throws AuthenticationException &#123;</span><br><span class="line">      <span class="built_in">Object</span> salt = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.saltSource != <span class="literal">null</span>) &#123;</span><br><span class="line">          salt = <span class="keyword">this</span>.saltSource.getSalt(userDetails);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (authentication.getCredentials() == <span class="literal">null</span>) &#123;</span><br><span class="line">          logger.debug(<span class="string">"Authentication failed: no credentials provided"</span>);</span><br><span class="line"></span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> BadCredentialsException(<span class="string">"Bad credentials:"</span> + userDetails);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="built_in">String</span> presentedPassword = authentication.getCredentials().toString();</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (!passwordEncoder.isPasswordValid(userDetails.getPassword(), presentedPassword, salt)) &#123;</span><br><span class="line">          logger.debug(<span class="string">"Authentication failed: password does not match stored value"</span>);</span><br><span class="line"></span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> BadCredentialsException(<span class="string">"Bad credentials:"</span> + userDetails);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  protected <span class="keyword">void</span> doAfterPropertiesSet() throws Exception &#123;</span><br><span class="line">      Assert.notNull(<span class="keyword">this</span>.userDetailsService, <span class="string">"A UserDetailsService must be set"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  protected PasswordEncoder getPasswordEncoder() &#123;</span><br><span class="line">      <span class="keyword">return</span> passwordEncoder;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  protected SaltSource getSaltSource() &#123;</span><br><span class="line">      <span class="keyword">return</span> saltSource;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  protected LoginUserDetailsService getUserDetailsService() &#123;</span><br><span class="line">      <span class="keyword">return</span> userDetailsService;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  protected final UserDetails retrieveUser(<span class="built_in">String</span> username, UsernamePasswordAuthenticationToken authentication)</span><br><span class="line">          throws AuthenticationException &#123;</span><br><span class="line">      UserDetails loadedUser;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          <span class="built_in">String</span> password = (<span class="built_in">String</span>) authentication.getCredentials();</span><br><span class="line">          <span class="comment">/**</span></span><br><span class="line"><span class="comment">           * 区别:这里使用的是自定义的验证方法</span></span><br><span class="line"><span class="comment">           */</span></span><br><span class="line">          loadedUser = getUserDetailsService().loadUserByUsername(username, password);</span><br><span class="line">      &#125; <span class="keyword">catch</span> (UsernameNotFoundException notFound) &#123;</span><br><span class="line">          <span class="keyword">throw</span> notFound;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (Exception repositoryProblem) &#123;</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> AuthenticationServiceException(repositoryProblem.getMessage(), repositoryProblem);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (loadedUser == <span class="literal">null</span>) &#123;</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> AuthenticationServiceException(</span><br><span class="line">                  <span class="string">"UserDetailsService returned null, which is an interface contract violation"</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> loadedUser;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Sets the PasswordEncoder instance to be used to encode and validate</span></span><br><span class="line"><span class="comment">   * passwords. If not set, the password will be compared as plain text.</span></span><br><span class="line"><span class="comment">   * &lt;p&gt;</span></span><br><span class="line"><span class="comment">   * For systems which are already using salted password which are encoded</span></span><br><span class="line"><span class="comment">   * with a previous release, the encoder should be of type</span></span><br><span class="line"><span class="comment">   * &#123;@code org.springframework.security.authentication.encoding.PasswordEncoder&#125;</span></span><br><span class="line"><span class="comment">   * . Otherwise, the recommended approach is to use</span></span><br><span class="line"><span class="comment">   * &#123;@code org.springframework.security.crypto.password.PasswordEncoder&#125;.</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * @param passwordEncoder must be an instance of one of the &#123;@code PasswordEncoder&#125;</span></span><br><span class="line"><span class="comment">   *                        types.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  public <span class="keyword">void</span> setPasswordEncoder(<span class="built_in">Object</span> passwordEncoder) &#123;</span><br><span class="line">      Assert.notNull(passwordEncoder, <span class="string">"passwordEncoder cannot be null"</span>);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (passwordEncoder <span class="keyword">instanceof</span> PasswordEncoder) &#123;</span><br><span class="line">          <span class="keyword">this</span>.passwordEncoder = (PasswordEncoder) passwordEncoder;</span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (passwordEncoder <span class="keyword">instanceof</span> org.springframework.security.crypto.password.PasswordEncoder) &#123;</span><br><span class="line">          final org.springframework.security.crypto.password.PasswordEncoder delegate = (org.springframework.security.crypto.password.PasswordEncoder) passwordEncoder;</span><br><span class="line">          <span class="keyword">this</span>.passwordEncoder = <span class="keyword">new</span> PasswordEncoder() &#123;</span><br><span class="line">              private <span class="keyword">void</span> checkSalt(<span class="built_in">Object</span> salt) &#123;</span><br><span class="line">                  Assert.isNull(salt, <span class="string">"Salt value must be null when used with crypto module PasswordEncoder"</span>);</span><br><span class="line">              &#125;</span><br><span class="line"></span><br><span class="line">              public <span class="built_in">String</span> encodePassword(<span class="built_in">String</span> rawPass, <span class="built_in">Object</span> salt) &#123;</span><br><span class="line">                  checkSalt(salt);</span><br><span class="line">                  <span class="keyword">return</span> delegate.encode(rawPass);</span><br><span class="line">              &#125;</span><br><span class="line"></span><br><span class="line">              public boolean isPasswordValid(<span class="built_in">String</span> encPass, <span class="built_in">String</span> rawPass, <span class="built_in">Object</span> salt) &#123;</span><br><span class="line">                  checkSalt(salt);</span><br><span class="line">                  <span class="keyword">return</span> delegate.matches(rawPass, encPass);</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"passwordEncoder must be a PasswordEncoder instance"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * The source of salts to use when decoding passwords. &lt;code&gt;null&lt;/code&gt; is</span></span><br><span class="line"><span class="comment">   * a valid value, meaning the &lt;code&gt;DaoAuthenticationProvider&lt;/code&gt; will</span></span><br><span class="line"><span class="comment">   * present &lt;code&gt;null&lt;/code&gt; to the relevant &lt;code&gt;PasswordEncoder&lt;/code&gt;.</span></span><br><span class="line"><span class="comment">   * &lt;p&gt;</span></span><br><span class="line"><span class="comment">   * Instead, it is recommended that you use an encoder which uses a random</span></span><br><span class="line"><span class="comment">   * salt and combines it with the password field. This is the default</span></span><br><span class="line"><span class="comment">   * approach taken in the</span></span><br><span class="line"><span class="comment">   * &#123;@code org.springframework.security.crypto.password&#125; package.</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * @param saltSource to use when attempting to decode passwords via the</span></span><br><span class="line"><span class="comment">   *                   &lt;code&gt;PasswordEncoder&lt;/code&gt;</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  public <span class="keyword">void</span> setSaltSource(SaltSource saltSource) &#123;</span><br><span class="line">      <span class="keyword">this</span>.saltSource = saltSource;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public <span class="keyword">void</span> setUserDetailsService(LoginUserDetailsService userDetailsService) &#123;</span><br><span class="line">      <span class="keyword">this</span>.userDetailsService = userDetailsService;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>LoginUserDetailsImpl</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">package com.example.security;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.GrantedAuthority;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.User;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UserDetails;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Collection;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @Author:Zhuang zexin</span></span><br><span class="line"><span class="comment"> * @Description:</span></span><br><span class="line"><span class="comment"> * @Date:Created in 下午 4:55 2017-11-24 0024</span></span><br><span class="line"><span class="comment"> * @Modified By:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">LoginUserDetailsImpl</span> <span class="keyword">extends</span> <span class="title">User</span> <span class="title">implements</span> <span class="title">UserDetails</span></span>&#123;</span><br><span class="line">    private <span class="keyword">static</span> final long serialVersionUID = <span class="number">-5424897749887458053</span>L;</span><br><span class="line"></span><br><span class="line">    public LoginUserDetailsImpl(<span class="built_in">String</span> username, <span class="built_in">String</span> password, boolean enabled, boolean accountNonExpired,</span><br><span class="line">                                boolean credentialsNonExpired, boolean accountNonLocked,</span><br><span class="line">                                Collection&lt;? extends GrantedAuthority&gt; authorities) &#123;</span><br><span class="line">        <span class="keyword">super</span>(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public LoginUserDetailsImpl(<span class="built_in">String</span> username, <span class="built_in">String</span> password, Collection&lt;? extends GrantedAuthority&gt; authorities) &#123;</span><br><span class="line">        <span class="keyword">super</span>(username, password, authorities);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public LoginUserDetailsImpl(<span class="built_in">String</span> username, <span class="built_in">String</span> password) &#123;</span><br><span class="line">        <span class="keyword">super</span>(username, password, <span class="keyword">new</span> ArrayList&lt;GrantedAuthority&gt;());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>LoginUserDetailsService</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">package com.example.security;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @Author:Zhuang zexin</span></span><br><span class="line"><span class="comment"> * @Description:</span></span><br><span class="line"><span class="comment"> * @Date:Created in 下午 4:56 2017-11-24 0024</span></span><br><span class="line"><span class="comment"> * @Modified By:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UserDetails;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UsernameNotFoundException;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public interface LoginUserDetailsService &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据用户名密码验证用户信息</span></span><br><span class="line"><span class="comment">     * @param username 用户名</span></span><br><span class="line"><span class="comment">     * @param password 密码</span></span><br><span class="line"><span class="comment">     * @return</span></span><br><span class="line"><span class="comment">     * @throws UsernameNotFoundException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    UserDetails loadUserByUsername(<span class="built_in">String</span> username, <span class="built_in">String</span> password) throws UsernameNotFoundException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>*　LoginUserDetailsServiceImpl<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">package com.example.security.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.security.LoginUserDetailsImpl;</span><br><span class="line"><span class="keyword">import</span> com.example.security.LoginUserDetailsService;</span><br><span class="line"><span class="keyword">import</span> com.example.service.UserService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.GrantedAuthority;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.authority.SimpleGrantedAuthority;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UserDetails;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UsernameNotFoundException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.annotation.Resource;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Collection;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @Author:Zhuang zexin</span></span><br><span class="line"><span class="comment"> * @Description:</span></span><br><span class="line"><span class="comment"> * @Date:Created in 下午 4:57 2017-11-24 0024</span></span><br><span class="line"><span class="comment"> * @Modified By:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">LoginUserDetailsServiceImpl</span> <span class="title">implements</span> <span class="title">LoginUserDetailsService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    @Resource(name=<span class="string">"userServiceImpl"</span>)</span><br><span class="line">    private UserService userServiceImpl;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 进行登录验证</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    public UserDetails loadUserByUsername(<span class="built_in">String</span> username, <span class="built_in">String</span> password) throws UsernameNotFoundException &#123;</span><br><span class="line">        boolean result = <span class="keyword">this</span>.validate(username, password);</span><br><span class="line">        <span class="keyword">if</span> (!result) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        Collection&lt;GrantedAuthority&gt; authorities = <span class="keyword">new</span> ArrayList&lt;GrantedAuthority&gt;();</span><br><span class="line">        authorities.add(<span class="keyword">new</span> SimpleGrantedAuthority(<span class="string">"ROLE_USER"</span>));</span><br><span class="line">        LoginUserDetailsImpl user = <span class="keyword">new</span> LoginUserDetailsImpl(username, password,authorities);</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 在此处验证</span></span><br><span class="line"><span class="comment">     * @param username</span></span><br><span class="line"><span class="comment">     * @param password</span></span><br><span class="line"><span class="comment">     * @return</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    private boolean validate(<span class="built_in">String</span> username, <span class="built_in">String</span> password) &#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 此处应该在数据库获取用户信息进行验证</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="built_in">String</span> checkpassword=userServiceImpl.CheckPassword(username);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="string">"xyc"</span>.equals(username) &amp;&amp; <span class="string">"123"</span>.equals(password)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://blog.csdn.net/xyc_csdn/article/details/52343847" target="_blank" rel="noopener">参考</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Donate comment here</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Banksys Zhuang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Banksys Zhuang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SpringMVC/" rel="tag"># SpringMVC</a>
+          
+            <a href="/tags/spring-security/" rel="tag"># spring security</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/23/BootStrap-Table/" rel="next" title="BootStrap-Table">
+                <i class="fa fa-chevron-left"></i> BootStrap-Table
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/04/SpringMVC整合Mybatis/" rel="prev" title="SpringMVC整合Mybatis">
+                SpringMVC整合Mybatis <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="uyan_frame"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Banksys Zhuang" />
+            
+              <p class="site-author-name" itemprop="name">Banksys Zhuang</p>
+              <p class="site-description motion-element" itemprop="description">Technology</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3446703702/profile?topnav=1&wvr=6&is_all=1" target="_blank" title="微博">
+                    
+                      <i class="fa fa-fw fa-globe"></i>微博</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.zhihu.com/people/zhuang-ze-xin-83/activities" target="_blank" title="知乎">
+                    
+                      <i class="fa fa-fw fa-globe"></i>知乎</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringMVC"><span class="nav-number">1.</span> <span class="nav-text">SpringMVC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#springMVC"><span class="nav-number">2.</span> <span class="nav-text">springMVC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整合Sping-Security"><span class="nav-number">3.</span> <span class="nav-text">整合Sping Security</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java代码"><span class="nav-number">4.</span> <span class="nav-text">java代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Banksys Zhuang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2149501"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

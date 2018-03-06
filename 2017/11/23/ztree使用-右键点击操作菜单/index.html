@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ztree," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Ztree的使用 效果展示 html1&amp;lt;ul id=&quot;fileTree&quot; class=&quot;ztre&quot; style=&quot;background-color:#fff;border:none;margin-top:0;width:100%;height:180px;&quot;&amp;gt;&amp;lt;/ul&amp;gt;    引入css文件ztree/css/metroStyle/metroStyle.css  ztree">
+<meta name="keywords" content="ztree">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ztree使用(右键点击操作菜单)">
+<meta property="og:url" content="http://yoursite.com/2017/11/23/ztree使用-右键点击操作菜单/index.html">
+<meta property="og:site_name" content="Zzx Blog">
+<meta property="og:description" content="Ztree的使用 效果展示 html1&amp;lt;ul id=&quot;fileTree&quot; class=&quot;ztre&quot; style=&quot;background-color:#fff;border:none;margin-top:0;width:100%;height:180px;&quot;&amp;gt;&amp;lt;/ul&amp;gt;    引入css文件ztree/css/metroStyle/metroStyle.css  ztree">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ozrd9k2sg.bkt.clouddn.com/img/%E6%96%87%E4%BB%B6%E5%A4%B9%E6%93%8D%E4%BD%9C.png">
+<meta property="og:image" content="http://ozrd9k2sg.bkt.clouddn.com/img/%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C.png">
+<meta property="og:updated_time" content="2017-11-23T08:42:43.618Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ztree使用(右键点击操作菜单)">
+<meta name="twitter:description" content="Ztree的使用 效果展示 html1&amp;lt;ul id=&quot;fileTree&quot; class=&quot;ztre&quot; style=&quot;background-color:#fff;border:none;margin-top:0;width:100%;height:180px;&quot;&amp;gt;&amp;lt;/ul&amp;gt;    引入css文件ztree/css/metroStyle/metroStyle.css  ztree">
+<meta name="twitter:image" content="http://ozrd9k2sg.bkt.clouddn.com/img/%E6%96%87%E4%BB%B6%E5%A4%B9%E6%93%8D%E4%BD%9C.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/23/ztree使用-右键点击操作菜单/"/>
+
+
+
+
+
+  <title>ztree使用(右键点击操作菜单) | Zzx Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zzx Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Since 2017</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/23/ztree使用-右键点击操作菜单/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Banksys Zhuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zzx Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ztree使用(右键点击操作菜单)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-23T09:53:11+08:00">
+                2017-11-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Ztree的使用"><a href="#Ztree的使用" class="headerlink" title="Ztree的使用"></a>Ztree的使用</h2><ul>
+<li>效果展示<br><img src="http://ozrd9k2sg.bkt.clouddn.com/img/%E6%96%87%E4%BB%B6%E5%A4%B9%E6%93%8D%E4%BD%9C.png" alt="文件夹操作"><br><img src="http://ozrd9k2sg.bkt.clouddn.com/img/%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C.png" alt="文件操作"></li>
+<li>html<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul id=<span class="string">"fileTree"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"ztre"</span> style=<span class="string">"background-color:#fff;border:none;margin-top:0;width:100%;height:180px;"</span>&gt;&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>引入<code>css</code>文件ztree/css/metroStyle/metroStyle.css  ztree/js/jquery.ztree.core-3.5.js</p>
+</blockquote>
+<ul>
+<li>js</li>
+</ul>
+<ol>
+<li>配置<code>setting</code>,<a href="http://www.treejs.cn/v3/main.php#_zTreeInfo" target="_blank" rel="noopener">ztreeapi</a><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> zTree, rMenu, imei;  <span class="comment">//静态参数，之后用到</span></span><br><span class="line">  <span class="keyword">var</span> setting = &#123;</span><br><span class="line">    <span class="keyword">async</span>: &#123;    <span class="comment">//异步加载</span></span><br><span class="line">        enable: <span class="literal">true</span>,</span><br><span class="line">        url: <span class="string">"message/operatefile"</span>,  <span class="comment">//后台请求地址</span></span><br><span class="line">        type: <span class="string">"post"</span>,</span><br><span class="line">        autoParam: [<span class="string">"id"</span>, <span class="string">"level"</span>, <span class="string">"name"</span>, <span class="string">"pId"</span>], <span class="comment">//默认参数，详见api</span></span><br><span class="line">        otherParam: [<span class="string">"imei"</span>, $(<span class="string">"#imei"</span>).val()], <span class="comment">//自定义参数</span></span><br><span class="line">        dataFilter: filter</span><br><span class="line">    &#125;,</span><br><span class="line">    data: &#123;</span><br><span class="line">        simpleData: &#123;</span><br><span class="line">            enable: <span class="literal">true</span>,</span><br><span class="line">            idKey: <span class="string">"id"</span>,           <span class="comment">//自定义配置数据</span></span><br><span class="line">            pIdKey: <span class="string">"pId"</span>,</span><br><span class="line">            rootPId: <span class="number">2</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    view: &#123;</span><br><span class="line">        expandSpeed: <span class="string">""</span>,</span><br><span class="line">        dblClickExpand: <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    callback: &#123;</span><br><span class="line">        onRightClick: OnRightClick,          <span class="comment">//返回操作，右击树点击事件</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<a id="more"></a>
+<ol>
+<li>初始化架子啊<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">refreshFileInfo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    $.fn.zTree.init($(<span class="string">"#fileTree"</span>), setting);   <span class="comment">//初始化</span></span><br><span class="line">    zTree = $.fn.zTree.getZTreeObj(<span class="string">"fileTree"</span>);</span><br><span class="line">    rMenu = $(<span class="string">"#rMenu"</span>);  <span class="comment">//右击控件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li>右击控件<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"> &lt;style type=<span class="string">"text/css"</span>&gt;</span><br><span class="line">        div#rMenu &#123;</span><br><span class="line">            position: absolute;</span><br><span class="line">            visibility: hidden;</span><br><span class="line">            top: <span class="number">0</span>;</span><br><span class="line">            background-color: #f9f9f9;</span><br><span class="line">            text-align: left;</span><br><span class="line">            padding: <span class="number">2</span>px;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        div#rMenu a &#123;</span><br><span class="line">            cursor: pointer;</span><br><span class="line">            list-style: none outside none;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &lt;<span class="regexp">/style&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;div id="rMenu"&gt;</span></span><br><span class="line"><span class="regexp">        &lt;a href="javascript:void(0);" id="r1" class="list-group-item" onclick="Createfloder();"&gt;创建文件夹&lt;/</span>a&gt;   <span class="comment">//穿件文件夹方法</span></span><br><span class="line">        &lt;a href=<span class="string">"javascript:void(0);"</span> id=<span class="string">"r2"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"list-group-item"</span> onclick=<span class="string">"Deletefile();"</span>&gt;删除文件&lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">        &lt;a href="javascript:void(0);" id="r3" class="list-group-item" onclick="Renamefile();"&gt;重命名文件&lt;/</span>a&gt;</span><br><span class="line">        &lt;a href=<span class="string">"javascript:void(0);"</span> id=<span class="string">"r4"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"list-group-item"</span> onclick=<span class="string">"Downloadfile();"</span>&gt;下载文件&lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">        &lt;a href="javascript:void(0);" id="r5" class="list-group-item" onclick="Uploadfile();"&gt;上传文件&lt;/</span>a&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol>
+<li><p>右击事件js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在ztree上的右击事件</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">OnRightClick</span>(<span class="params">event, treeId, treeNode</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!treeNode &amp;&amp; event.target.tagName.toLowerCase() != <span class="string">"button"</span> &amp;&amp; $(event.target).parents(<span class="string">"a"</span>).length == <span class="number">0</span>) &#123;</span><br><span class="line">        showRMenu(<span class="string">"root"</span>, event.clientX, event.clientY, treeNode);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (treeNode &amp;&amp; !treeNode.noR) &#123;</span><br><span class="line">        showRMenu(<span class="string">"node"</span>, event.clientX, event.clientY, treeNode);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//显示右键菜单</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">showRMenu</span>(<span class="params">type, x, y, treeNode</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (treeNode.name.indexOf(<span class="string">"."</span>) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        $(<span class="string">"#rMenu ul"</span>).show();</span><br><span class="line">        $(<span class="string">"#r1"</span>).hide();</span><br><span class="line"></span><br><span class="line">        $(<span class="string">"#r5"</span>).hide();</span><br><span class="line">        $(<span class="string">"#r2"</span>).show();</span><br><span class="line">        $(<span class="string">"#r3"</span>).show();</span><br><span class="line">        $(<span class="string">"#r4"</span>).show();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        $(<span class="string">"#rMenu ul"</span>).show();</span><br><span class="line">        $(<span class="string">"#r1"</span>).show();</span><br><span class="line"></span><br><span class="line">        $(<span class="string">"#r5"</span>).show();</span><br><span class="line">        $(<span class="string">"#r2"</span>).hide();</span><br><span class="line">        $(<span class="string">"#r3"</span>).hide();</span><br><span class="line">        $(<span class="string">"#r4"</span>).hide();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    y += $(<span class="built_in">window</span>).scrollTop();</span><br><span class="line">    x += $(<span class="built_in">window</span>).scrollLeft();</span><br><span class="line">    <span class="comment">//alert($(window).scrollTop()+"ttt"+$(window).scrollLeft()+"lll"+x+"xxxx"+y);</span></span><br><span class="line">    rMenu.css(&#123;<span class="string">"top"</span>: y + <span class="string">"px"</span>, <span class="string">"left"</span>: x + <span class="string">"px"</span>, <span class="string">"visibility"</span>: <span class="string">"visible"</span>&#125;); <span class="comment">//设置右键菜单的位置、可见</span></span><br><span class="line">    $(<span class="string">"body"</span>).bind(<span class="string">"mousedown"</span>, onBodyMouseDown);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//隐藏右键菜单</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hideRMenu</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (rMenu) rMenu.css(&#123;<span class="string">"visibility"</span>: <span class="string">"hidden"</span>&#125;); <span class="comment">//设置右键菜单不可见</span></span><br><span class="line">    $(<span class="string">"body"</span>).unbind(<span class="string">"mousedown"</span>, onBodyMouseDown);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//鼠标按下事件</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">onBodyMouseDown</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!(event.target.id == <span class="string">"rMenu"</span> || $(event.target).parents(<span class="string">"#rMenu"</span>).length &gt; <span class="number">0</span>)) &#123;</span><br><span class="line">        rMenu.css(&#123;<span class="string">"visibility"</span>: <span class="string">"hidden"</span>&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>举列创建文件夹方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建文件夹</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Createfloder</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    hideRMenu();</span><br><span class="line">    <span class="keyword">var</span> selectNodes = zTree.getSelectedNodes();</span><br><span class="line">    <span class="comment">//alert(selectNodes[0].name+"11"+selectNodes[0].id+"22");</span></span><br><span class="line">    <span class="comment">// alert(typeof(selectNodes)+""+selectNodes[0]+""+selectNodes.length);</span></span><br><span class="line">    <span class="keyword">if</span> (selectNodes.length == <span class="string">'1'</span>) &#123;</span><br><span class="line">        fileDialogInit(<span class="string">'新建文件夹'</span>, <span class="string">'文件夹名'</span>, newfile, selectNodes);   <span class="comment">//显示模态框，并返回操作</span></span><br><span class="line">        $(<span class="string">"#fileDialog .modal-body .target"</span>).parent().parent().addClass(<span class="string">"hidden"</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        toastr.info(<span class="string">'请点击选择文件'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//文件操作模态框</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fileDialogInit</span>(<span class="params">action, notice, callback, selectNodes</span>) </span>&#123;</span><br><span class="line">    $(<span class="string">'#fileDialog .btn-success'</span>).unbind(<span class="string">"click"</span>);</span><br><span class="line">    $(<span class="string">"#fileDialog .btn-success"</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (callback) &#123;</span><br><span class="line">            callback(selectNodes);</span><br><span class="line">        &#125;</span><br><span class="line">        $(<span class="string">"#fileDialog"</span>).modal(<span class="string">'hide'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    $(<span class="string">"#fileDialog .modal-body .target"</span>).parent().parent().removeClass(<span class="string">"hidden"</span>);</span><br><span class="line">    $(<span class="string">"#name"</span>).parent().parent().removeClass(<span class="string">"hidden"</span>);</span><br><span class="line">    <span class="keyword">var</span> path = selectNodes[<span class="number">0</span>].id;</span><br><span class="line">    <span class="keyword">var</span> target = selectNodes[<span class="number">0</span>].name;</span><br><span class="line">    $(<span class="string">"#fileDialog .modal-title"</span>).html(action);</span><br><span class="line">    $(<span class="string">"#fileDialog #name"</span>).val(<span class="string">''</span>);</span><br><span class="line">    $(<span class="string">"#fileDialog .modal-body .path"</span>).html(<span class="string">'当前路径：'</span> + path);</span><br><span class="line">    $(<span class="string">"#fileDialog .modal-body .notice"</span>).html(notice);</span><br><span class="line">    $(<span class="string">"#fileDialog .modal-body .target"</span>).html(<span class="string">'当前文件：'</span> + target);</span><br><span class="line">    $(<span class="string">"#fileDialog"</span>).modal(<span class="string">"show"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> &lt;!-- 文件操作模态框HTML --&gt;</span><br><span class="line">    &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"modal fade in"</span> id=<span class="string">"fileDialog"</span> tabindex=<span class="string">"-1"</span> role=<span class="string">"dialog"</span>&gt;</span><br><span class="line">        &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"modal-dialog"</span> role=<span class="string">"document"</span>&gt;</span><br><span class="line">            &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"modal-content"</span>&gt;</span><br><span class="line">                &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"modal-header"</span> id=<span class="string">"norHeader"</span>&gt;</span><br><span class="line">                    &lt;button type=<span class="string">"button"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"close"</span> data-dismiss=<span class="string">"modal"</span> aria-label=<span class="string">"Close"</span>&gt;&lt;span</span><br><span class="line">                            aria-hidden="true"&gt;&amp;times;&lt;/span&gt;&lt;/button&gt;</span><br><span class="line">                    &lt;h4 <span class="class"><span class="keyword">class</span></span>=<span class="string">"modal-title"</span>&gt;&lt;/h4&gt;</span><br><span class="line">                &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">                &lt;div class="modal-body"&gt;</span></span><br><span class="line"><span class="regexp">                    &lt;div class="form-horizontal"&gt;</span></span><br><span class="line"><span class="regexp">                        &lt;div class="form-group"&gt;</span></span><br><span class="line"><span class="regexp">                            &lt;div class="ol-xs-12 col-sm-12 col-md-12 col-lg-12"&gt;</span></span><br><span class="line"><span class="regexp">                                &lt;label class="path control-label"&gt;&lt;/</span>label&gt;</span><br><span class="line">                            &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">                        &lt;/</span>div&gt;</span><br><span class="line">                        &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"form-group"</span>&gt;</span><br><span class="line">                            &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"ol-xs-12 col-sm-12 col-md-12 col-lg-12"</span>&gt;</span><br><span class="line">                                &lt;label <span class="class"><span class="keyword">class</span></span>=<span class="string">"target control-label"</span>&gt;&lt;/label&gt;</span><br><span class="line">                            &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">                        &lt;/</span>div&gt;</span><br><span class="line">                        &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"form-group"</span>&gt;</span><br><span class="line">                            &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"ol-xs-2 col-sm-2 col-md-2 col-lg-2"</span>&gt;</span><br><span class="line">                                &lt;label <span class="class"><span class="keyword">class</span></span>=<span class="string">"control-label notice"</span>&gt;&lt;/label&gt;</span><br><span class="line">                            &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">                            &lt;div class="col-xs-8 col-sm-8 col-md-8 col-lg-8"&gt;</span></span><br><span class="line"><span class="regexp">                                &lt;input type="text" id="name" class="form-control"/</span>&gt;</span><br><span class="line">                            &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">                        &lt;/</span>div&gt;</span><br><span class="line">                    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">                &lt;/</span>div&gt;</span><br><span class="line">                &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"modal-footer"</span>&gt;</span><br><span class="line">                    &lt;button type=<span class="string">"button"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"btn btn-gray"</span> data-dismiss=<span class="string">"modal"</span>&gt;取消&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">                    &lt;button type="button" class="btn btn-success"&gt;确定&lt;/</span>button&gt;</span><br><span class="line">                &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>div&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>div&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//新建文件操作</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">newfile</span>(<span class="params">selectNodes</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> name = $(<span class="string">"#name"</span>).val();</span><br><span class="line">    <span class="comment">//alert(selectNodes+name);</span></span><br><span class="line">    <span class="keyword">if</span> (name == <span class="literal">null</span> || name == <span class="string">""</span>) &#123;</span><br><span class="line">        toastr.warning(<span class="string">'文件名不能为空!'</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    $.ajax(&#123;</span><br><span class="line">        type: <span class="string">"post"</span>,</span><br><span class="line">        url: <span class="string">"message/createfloder"</span>,</span><br><span class="line">        data: &#123;</span><br><span class="line">            path: selectNodes[<span class="number">0</span>].id,</span><br><span class="line">            name: name,</span><br><span class="line">            imei: imei</span><br><span class="line">        &#125;,</span><br><span class="line">        success: <span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (result.msg == <span class="string">"ok"</span>) &#123;</span><br><span class="line">                toastr.success(<span class="string">'创建文件成功!'</span>);</span><br><span class="line">                refreshFileInfo();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                toastr.error(<span class="string">'创建文件失败!'</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        error: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            toastr.error(<span class="string">'连接出错!'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="java后台"><a href="#java后台" class="headerlink" title="java后台"></a>java后台</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public List&lt;NodeBean&gt; queryTreeData(JSONObject ret,<span class="built_in">String</span> treepid,<span class="built_in">String</span> treename) &#123;</span><br><span class="line">        List&lt;NodeBean&gt; nodeBeanList= <span class="keyword">new</span> ArrayList&lt;NodeBean&gt;();</span><br><span class="line">        JSONArray retdata=ret.getJSONArray(<span class="string">"data"</span>);    <span class="comment">//获取查询参数</span></span><br><span class="line">        <span class="keyword">for</span>(int i=<span class="number">0</span>;i&lt;retdata.size();i++)&#123;</span><br><span class="line">            NodeBean treedata=<span class="keyword">new</span> NodeBean();</span><br><span class="line">            treedata.setId(treepid+<span class="string">"/"</span>+retdata.getJSONObject(i).getString(<span class="string">"name"</span>));   <span class="comment">//拼装数据</span></span><br><span class="line">            treedata.setpId(treepid+treename+<span class="string">"/"</span>);</span><br><span class="line">                <span class="comment">/*treedata.setpId(String.valueOf(i));*/</span></span><br><span class="line">            treedata.setName(retdata.getJSONObject(i).getString(<span class="string">"name"</span>));</span><br><span class="line">            <span class="keyword">if</span>(retdata.getJSONObject(i).getString(<span class="string">"type"</span>).equals(<span class="string">"D"</span>))&#123;</span><br><span class="line">                treedata.setIsParent(<span class="literal">true</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                treedata.setIsParent(<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">            nodeBeanList.add(treedata);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> nodeBeanList;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Donate comment here</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Banksys Zhuang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Banksys Zhuang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ztree/" rel="tag"># ztree</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/22/Git使用教程/" rel="next" title="Git使用教程">
+                <i class="fa fa-chevron-left"></i> Git使用教程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/23/BootStrap-Table/" rel="prev" title="BootStrap-Table">
+                BootStrap-Table <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="uyan_frame"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Banksys Zhuang" />
+            
+              <p class="site-author-name" itemprop="name">Banksys Zhuang</p>
+              <p class="site-description motion-element" itemprop="description">Technology</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3446703702/profile?topnav=1&wvr=6&is_all=1" target="_blank" title="微博">
+                    
+                      <i class="fa fa-fw fa-globe"></i>微博</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.zhihu.com/people/zhuang-ze-xin-83/activities" target="_blank" title="知乎">
+                    
+                      <i class="fa fa-fw fa-globe"></i>知乎</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ztree的使用"><span class="nav-number">1.</span> <span class="nav-text">Ztree的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java后台"><span class="nav-number">2.</span> <span class="nav-text">java后台</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Banksys Zhuang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2149501"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
