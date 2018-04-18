@@ -262,6 +262,181 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/Spring切面记录操作日志/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Banksys Zhuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zzx Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/18/Spring切面记录操作日志/" itemprop="url">Spring切面记录操作日志</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-18T09:47:44+08:00">
+                2018-04-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="关于Spring-AOP的使用–记录系统操作日志"><a href="#关于Spring-AOP的使用–记录系统操作日志" class="headerlink" title="关于Spring AOP的使用–记录系统操作日志"></a>关于Spring AOP的使用–记录系统操作日志</h2><ol>
+<li>AOP：面向切面编程（面向接口的编程(⊙﹏⊙)），通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术。</li>
+<li>记录数据库操作日志的方法一般有三种：</li>
+</ol>
+<ul>
+<li>最原始的，每次执行操作语句后执行记录方法，不好管理，效率低</li>
+<li>拦截器：新建一个拦截器的class继承spring web的HandlerInterceptorAdapter类，重写：</li>
+</ul>
+<ul>
+<li>preHandle：它会在处理方法之前执行，可以用来做一些编码处理、安全限制之类的操作。</li>
+<li>postHandle：它是在方法执行后开始返回前执行，可以进行日志记录、修改ModelView之类的操作。</li>
+<li>afterCompletion：最后执行，无论出错与否都会执行这个方法，可以用来记录异常信息和一些必要的操作记录。</li>
+<li>afterConcurrentHandlingStarted：controller方法异步开始执行时就开始执行这个方法，而postHandle需要等到controller异步执行完成后再执行。<ul>
+<li>缺点：比较麻烦，不能获取参数</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>AOP，通过加入注解@Aspect，创建切入点。加入注解@Pointcut，配置接入点（配置切入入口，模块，如Controller，Dao）,然后在配置文件配置<aop:aspectj-autoproxy>，即aspectj动态代理。<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/18/Spring切面记录操作日志/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/SpringBoot项目部署问题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1760,166 +1935,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/23/ztree使用-右键点击操作菜单/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Banksys Zhuang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zzx Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/23/ztree使用-右键点击操作菜单/" itemprop="url">ztree使用(右键点击操作菜单)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-23T09:53:11+08:00">
-                2017-11-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">Javascript</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Ztree的使用"><a href="#Ztree的使用" class="headerlink" title="Ztree的使用"></a>Ztree的使用</h2><ul>
-<li>效果展示<br><img src="http://ozrd9k2sg.bkt.clouddn.com/img/%E6%96%87%E4%BB%B6%E5%A4%B9%E6%93%8D%E4%BD%9C.png" alt="文件夹操作"><br><img src="http://ozrd9k2sg.bkt.clouddn.com/img/%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C.png" alt="文件操作"></li>
-<li>html<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul id=<span class="string">"fileTree"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"ztre"</span> style=<span class="string">"background-color:#fff;border:none;margin-top:0;width:100%;height:180px;"</span>&gt;&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>引入<code>css</code>文件ztree/css/metroStyle/metroStyle.css  ztree/js/jquery.ztree.core-3.5.js</p>
-</blockquote>
-<ul>
-<li>js</li>
-</ul>
-<ol>
-<li>配置<code>setting</code>,<a href="http://www.treejs.cn/v3/main.php#_zTreeInfo" target="_blank" rel="noopener">ztreeapi</a><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> zTree, rMenu, imei;  <span class="comment">//静态参数，之后用到</span></span><br><span class="line">  <span class="keyword">var</span> setting = &#123;</span><br><span class="line">    <span class="keyword">async</span>: &#123;    <span class="comment">//异步加载</span></span><br><span class="line">        enable: <span class="literal">true</span>,</span><br><span class="line">        url: <span class="string">"message/operatefile"</span>,  <span class="comment">//后台请求地址</span></span><br><span class="line">        type: <span class="string">"post"</span>,</span><br><span class="line">        autoParam: [<span class="string">"id"</span>, <span class="string">"level"</span>, <span class="string">"name"</span>, <span class="string">"pId"</span>], <span class="comment">//默认参数，详见api</span></span><br><span class="line">        otherParam: [<span class="string">"imei"</span>, $(<span class="string">"#imei"</span>).val()], <span class="comment">//自定义参数</span></span><br><span class="line">        dataFilter: filter</span><br><span class="line">    &#125;,</span><br><span class="line">    data: &#123;</span><br><span class="line">        simpleData: &#123;</span><br><span class="line">            enable: <span class="literal">true</span>,</span><br><span class="line">            idKey: <span class="string">"id"</span>,           <span class="comment">//自定义配置数据</span></span><br><span class="line">            pIdKey: <span class="string">"pId"</span>,</span><br><span class="line">            rootPId: <span class="number">2</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    view: &#123;</span><br><span class="line">        expandSpeed: <span class="string">""</span>,</span><br><span class="line">        dblClickExpand: <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    callback: &#123;</span><br><span class="line">        onRightClick: OnRightClick,          <span class="comment">//返回操作，右击树点击事件</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/23/ztree使用-右键点击操作菜单/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1974,7 +1989,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1996,7 +2011,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

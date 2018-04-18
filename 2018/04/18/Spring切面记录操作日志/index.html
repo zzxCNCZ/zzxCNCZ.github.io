@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="AOP," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="关于Spring AOP的使用–记录系统操作日志 AOP：面向切面编程（面向接口的编程(⊙﹏⊙)），通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术。 记录数据库操作日志的方法一般有三种：   最原始的，每次执行操作语句后执行记录方法，不好管理，效率低 拦截器：新建一个拦截器的class继承spring web的HandlerInterceptorAdapter类，重写：   pre">
+<meta name="keywords" content="AOP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring切面记录操作日志">
+<meta property="og:url" content="http://yoursite.com/2018/04/18/Spring切面记录操作日志/index.html">
+<meta property="og:site_name" content="Zzx Blog">
+<meta property="og:description" content="关于Spring AOP的使用–记录系统操作日志 AOP：面向切面编程（面向接口的编程(⊙﹏⊙)），通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术。 记录数据库操作日志的方法一般有三种：   最原始的，每次执行操作语句后执行记录方法，不好管理，效率低 拦截器：新建一个拦截器的class继承spring web的HandlerInterceptorAdapter类，重写：   pre">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-18T02:14:16.823Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring切面记录操作日志">
+<meta name="twitter:description" content="关于Spring AOP的使用–记录系统操作日志 AOP：面向切面编程（面向接口的编程(⊙﹏⊙)），通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术。 记录数据库操作日志的方法一般有三种：   最原始的，每次执行操作语句后执行记录方法，不好管理，效率低 拦截器：新建一个拦截器的class继承spring web的HandlerInterceptorAdapter类，重写：   pre">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/18/Spring切面记录操作日志/"/>
+
+
+
+
+
+  <title>Spring切面记录操作日志 | Zzx Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zzx Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Since 2017</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/Spring切面记录操作日志/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Banksys Zhuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zzx Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring切面记录操作日志</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-18T09:47:44+08:00">
+                2018-04-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="关于Spring-AOP的使用–记录系统操作日志"><a href="#关于Spring-AOP的使用–记录系统操作日志" class="headerlink" title="关于Spring AOP的使用–记录系统操作日志"></a>关于Spring AOP的使用–记录系统操作日志</h2><ol>
+<li>AOP：面向切面编程（面向接口的编程(⊙﹏⊙)），通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术。</li>
+<li>记录数据库操作日志的方法一般有三种：</li>
+</ol>
+<ul>
+<li>最原始的，每次执行操作语句后执行记录方法，不好管理，效率低</li>
+<li>拦截器：新建一个拦截器的class继承spring web的HandlerInterceptorAdapter类，重写：</li>
+</ul>
+<ul>
+<li>preHandle：它会在处理方法之前执行，可以用来做一些编码处理、安全限制之类的操作。</li>
+<li>postHandle：它是在方法执行后开始返回前执行，可以进行日志记录、修改ModelView之类的操作。</li>
+<li>afterCompletion：最后执行，无论出错与否都会执行这个方法，可以用来记录异常信息和一些必要的操作记录。</li>
+<li>afterConcurrentHandlingStarted：controller方法异步开始执行时就开始执行这个方法，而postHandle需要等到controller异步执行完成后再执行。<ul>
+<li>缺点：比较麻烦，不能获取参数</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>AOP，通过加入注解@Aspect，创建切入点。加入注解@Pointcut，配置接入点（配置切入入口，模块，如Controller，Dao）,然后在配置文件配置<aop:aspectj-autoproxy>，即aspectj动态代理。<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><a id="more"></a></aop:aspectj-autoproxy></li>
+</ul>
+<ol>
+<li><p>Maven包：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!-- AOP begin --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.aspectj&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">    &lt;artifactId&gt;aspectjrt&lt;/</span>artifactId&gt;</span><br><span class="line">    &lt;version&gt;<span class="number">1.7</span><span class="number">.4</span>&lt;<span class="regexp">/version&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.aspectj&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">    &lt;artifactId&gt;aspectjweaver&lt;/</span>artifactId&gt;</span><br><span class="line">    &lt;version&gt;<span class="number">1.7</span><span class="number">.4</span>&lt;<span class="regexp">/version&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;cglib&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">    &lt;artifactId&gt;cglib&lt;/</span>artifactId&gt;</span><br><span class="line">    &lt;version&gt;<span class="number">3.1</span>&lt;<span class="regexp">/version&gt;</span></span><br><span class="line"><span class="regexp">    &lt;scope&gt;runtime&lt;/</span>scope&gt;</span><br><span class="line">&lt;<span class="regexp">/dependency&gt;</span></span><br><span class="line"><span class="regexp">&lt;!-- AOP end --&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Spring配置文件</p>
+</li>
+</ol>
+<ul>
+<li><p>DTD：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xmlns:aop=<span class="string">"http://www.springframework.org/schema/aop"</span></span><br><span class="line">      xsi:schemaLocation=<span class="string">"http://www.springframework.org/schema/aop"</span></span><br><span class="line">      <span class="string">"http://www.springframework.org/schema/aop/spring-aop.xsd"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>内容</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;aop:aspectj-autoproxy proxy-target-<span class="class"><span class="keyword">class</span></span>=<span class="string">"true"</span> /&gt;</span><br><span class="line"> &lt;!--aop执行操作的类--&gt;</span><br><span class="line"> &lt;bean id=<span class="string">"logAopAction"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"com.example.core.LogAopAction"</span>/&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol>
+<li><p>创建日志类</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">LogEntity</span> <span class="title">implements</span> <span class="title">Serializable</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    private <span class="built_in">String</span> userId;</span><br><span class="line">    private <span class="built_in">String</span> moudle;</span><br><span class="line">    private <span class="built_in">String</span> method;</span><br><span class="line">    private <span class="built_in">String</span> reponseData;</span><br><span class="line"></span><br><span class="line">    public <span class="built_in">String</span> getUserId() &#123;</span><br><span class="line">        <span class="keyword">return</span> userId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> setUserId(<span class="built_in">String</span> userId) &#123;</span><br><span class="line">        <span class="keyword">this</span>.userId = userId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="built_in">String</span> getMoudle() &#123;</span><br><span class="line">        <span class="keyword">return</span> moudle;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> setMoudle(<span class="built_in">String</span> moudle) &#123;</span><br><span class="line">        <span class="keyword">this</span>.moudle = moudle;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="built_in">String</span> getMethod() &#123;</span><br><span class="line">        <span class="keyword">return</span> method;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> setMethod(<span class="built_in">String</span> method) &#123;</span><br><span class="line">        <span class="keyword">this</span>.method = method;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="built_in">String</span> getReponseData() &#123;</span><br><span class="line">        <span class="keyword">return</span> reponseData;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> setReponseData(<span class="built_in">String</span> reponseData) &#123;</span><br><span class="line">        <span class="keyword">this</span>.reponseData = reponseData;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="built_in">String</span> getIp() &#123;</span><br><span class="line">        <span class="keyword">return</span> ip;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> setIp(<span class="built_in">String</span> ip) &#123;</span><br><span class="line">        <span class="keyword">this</span>.ip = ip;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="built_in">String</span> getData() &#123;</span><br><span class="line">        <span class="keyword">return</span> data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> setData(<span class="built_in">String</span> data) &#123;</span><br><span class="line">        <span class="keyword">this</span>.data = data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="built_in">String</span> getCommite() &#123;</span><br><span class="line">        <span class="keyword">return</span> commite;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> setCommite(<span class="built_in">String</span> commite) &#123;</span><br><span class="line">        <span class="keyword">this</span>.commite = commite;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private <span class="built_in">String</span> ip;</span><br><span class="line">    private <span class="built_in">String</span> data;</span><br><span class="line">    private <span class="built_in">String</span> commite;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建切入点方法,方法中调用相关日志操作接口，记录到数据库中</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line">package com.example.core;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.pojo.LogEntity;</span><br><span class="line"><span class="keyword">import</span> com.example.service.LogService;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.ProceedingJoinPoint;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.Signature;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Around;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Aspect;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Pointcut;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.reflect.MethodSignature;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.RequestContextHolder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.ServletRequestAttributes;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @Author:Zhuang Zx</span></span><br><span class="line"><span class="comment"> * @Description:</span></span><br><span class="line"><span class="comment"> * @Date:Created in 17:28 2018/4/2</span></span><br><span class="line"><span class="comment"> * @Modified By:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line">@Aspect</span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">LogAopAction</span> </span>&#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    private LogService logServiceImpl;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//配置接入点,如果不知道怎么配置,可以百度一下规则</span></span><br><span class="line">    @Pointcut(<span class="string">"execution(* com.example.controller..*.*(..))"</span>)</span><br><span class="line">    private <span class="keyword">void</span> controllerAspect()&#123;&#125;<span class="comment">//定义一个切入点</span></span><br><span class="line"></span><br><span class="line">    @Around(<span class="string">"controllerAspect()"</span>)</span><br><span class="line">    public <span class="built_in">Object</span> around(ProceedingJoinPoint pjp) throws Throwable &#123;</span><br><span class="line">        <span class="comment">//常见日志实体对象</span></span><br><span class="line">        LogEntity log = <span class="keyword">new</span> LogEntity();</span><br><span class="line">        <span class="comment">//获取登录用户账户</span></span><br><span class="line">        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();</span><br><span class="line">        <span class="built_in">String</span> name = (<span class="built_in">String</span>) request.getSession().getAttribute(<span class="string">"USER_ID"</span>);</span><br><span class="line">        <span class="built_in">Map</span>&lt;<span class="built_in">String</span>,<span class="built_in">String</span>[]&gt; param= request.getParameterMap();</span><br><span class="line">        log.setUserId(name);</span><br><span class="line">        <span class="comment">//获取系统时间</span></span><br><span class="line">        <span class="built_in">String</span> time = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"YYYY-MM-dd HH:mm:ss"</span>).format(<span class="keyword">new</span> <span class="built_in">Date</span>());</span><br><span class="line">        log.setData(time);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取系统ip,这里用的是我自己的工具类,可自行网上查询获取ip方法</span></span><br><span class="line">       <span class="comment">/* String ip = GetLocalIp.localIp();</span></span><br><span class="line"><span class="comment">        log.setIP(ip);*/</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//方法通知前获取时间,为什么要记录这个时间呢？当然是用来计算模块执行时间的</span></span><br><span class="line">        long start = System.currentTimeMillis();</span><br><span class="line">        <span class="comment">// 拦截的实体类，就是当前正在执行的controller</span></span><br><span class="line">        <span class="built_in">Object</span> target = pjp.getTarget();</span><br><span class="line">        <span class="comment">// 拦截的方法名称。当前正在执行的方法</span></span><br><span class="line">        <span class="built_in">String</span> methodName = pjp.getSignature().getName();</span><br><span class="line">        <span class="comment">// 拦截的方法参数</span></span><br><span class="line">        <span class="built_in">Object</span>[] args = pjp.getArgs();</span><br><span class="line">        <span class="comment">// 拦截的放参数类型</span></span><br><span class="line">        Signature sig = pjp.getSignature();</span><br><span class="line">        MethodSignature msig = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (!(sig <span class="keyword">instanceof</span> MethodSignature)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"该注解只能用于方法"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        msig = (MethodSignature) sig;</span><br><span class="line">        Class[] parameterTypes = msig.getMethod().getParameterTypes();</span><br><span class="line"></span><br><span class="line">        <span class="built_in">Object</span> object = <span class="literal">null</span>;</span><br><span class="line">        <span class="comment">// 获得被拦截的方法</span></span><br><span class="line">        Method method = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            method = target.getClass().getMethod(methodName, parameterTypes);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchMethodException e1) &#123;</span><br><span class="line">            <span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">            e1.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SecurityException e1) &#123;</span><br><span class="line">            <span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">            e1.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">null</span> != method) &#123;</span><br><span class="line">            <span class="comment">// 判断是否包含自定义的注解，说明一下这里的SystemLog就是我自己自定义的注解</span></span><br><span class="line">            <span class="keyword">if</span> (method.isAnnotationPresent(SystemLog.class)) &#123;</span><br><span class="line">                SystemLog systemlog = method.getAnnotation(SystemLog.class);</span><br><span class="line">                log.setMoudle(systemlog.module());</span><br><span class="line">                log.setMethod(systemlog.methods());</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">                    long end = System.currentTimeMillis();</span><br><span class="line">                    <span class="comment">//将计算好的时间保存在实体中</span></span><br><span class="line">                    log.setReponseData(<span class="string">""</span>+(end-start));</span><br><span class="line">                    log.setCommite(<span class="string">"执行成功！"</span>);</span><br><span class="line">                    <span class="comment">//保存进数据库</span></span><br><span class="line">                    <span class="comment">//logservice.saveLog(log);</span></span><br><span class="line">                    System.out.print(<span class="string">"记录成功"</span>);</span><br><span class="line">                    object = pjp.proceed();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Throwable e) &#123;</span><br><span class="line">                    <span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">                    long end = System.currentTimeMillis();</span><br><span class="line">                    log.setReponseData(<span class="string">""</span>+(end-start));</span><br><span class="line">                    log.setCommite(<span class="string">"执行失败"</span>);</span><br><span class="line">                    <span class="comment">//logservice.saveLog(log);</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;<span class="comment">//没有包含注解</span></span><br><span class="line">                object = pjp.proceed();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">//不需要拦截直接执行</span></span><br><span class="line">            object = pjp.proceed();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> object;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Donate comment here</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Banksys Zhuang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Banksys Zhuang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AOP/" rel="tag"># AOP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/08/SpringBoot项目部署问题/" rel="next" title="SpringBoot项目部署问题">
+                <i class="fa fa-chevron-left"></i> SpringBoot项目部署问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="uyan_frame"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Banksys Zhuang" />
+            
+              <p class="site-author-name" itemprop="name">Banksys Zhuang</p>
+              <p class="site-description motion-element" itemprop="description">Technology</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3446703702/profile?topnav=1&wvr=6&is_all=1" target="_blank" title="微博">
+                    
+                      <i class="fa fa-fw fa-globe"></i>微博</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.zhihu.com/people/zhuang-ze-xin-83/activities" target="_blank" title="知乎">
+                    
+                      <i class="fa fa-fw fa-globe"></i>知乎</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于Spring-AOP的使用–记录系统操作日志"><span class="nav-number">1.</span> <span class="nav-text">关于Spring AOP的使用–记录系统操作日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体实现"><span class="nav-number">2.</span> <span class="nav-text">具体实现</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Banksys Zhuang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2149501"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

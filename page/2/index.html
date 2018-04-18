@@ -262,6 +262,166 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/23/ztree使用-右键点击操作菜单/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Banksys Zhuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zzx Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/23/ztree使用-右键点击操作菜单/" itemprop="url">ztree使用(右键点击操作菜单)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-23T09:53:11+08:00">
+                2017-11-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Ztree的使用"><a href="#Ztree的使用" class="headerlink" title="Ztree的使用"></a>Ztree的使用</h2><ul>
+<li>效果展示<br><img src="http://ozrd9k2sg.bkt.clouddn.com/img/%E6%96%87%E4%BB%B6%E5%A4%B9%E6%93%8D%E4%BD%9C.png" alt="文件夹操作"><br><img src="http://ozrd9k2sg.bkt.clouddn.com/img/%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C.png" alt="文件操作"></li>
+<li>html<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul id=<span class="string">"fileTree"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"ztre"</span> style=<span class="string">"background-color:#fff;border:none;margin-top:0;width:100%;height:180px;"</span>&gt;&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>引入<code>css</code>文件ztree/css/metroStyle/metroStyle.css  ztree/js/jquery.ztree.core-3.5.js</p>
+</blockquote>
+<ul>
+<li>js</li>
+</ul>
+<ol>
+<li>配置<code>setting</code>,<a href="http://www.treejs.cn/v3/main.php#_zTreeInfo" target="_blank" rel="noopener">ztreeapi</a><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> zTree, rMenu, imei;  <span class="comment">//静态参数，之后用到</span></span><br><span class="line">  <span class="keyword">var</span> setting = &#123;</span><br><span class="line">    <span class="keyword">async</span>: &#123;    <span class="comment">//异步加载</span></span><br><span class="line">        enable: <span class="literal">true</span>,</span><br><span class="line">        url: <span class="string">"message/operatefile"</span>,  <span class="comment">//后台请求地址</span></span><br><span class="line">        type: <span class="string">"post"</span>,</span><br><span class="line">        autoParam: [<span class="string">"id"</span>, <span class="string">"level"</span>, <span class="string">"name"</span>, <span class="string">"pId"</span>], <span class="comment">//默认参数，详见api</span></span><br><span class="line">        otherParam: [<span class="string">"imei"</span>, $(<span class="string">"#imei"</span>).val()], <span class="comment">//自定义参数</span></span><br><span class="line">        dataFilter: filter</span><br><span class="line">    &#125;,</span><br><span class="line">    data: &#123;</span><br><span class="line">        simpleData: &#123;</span><br><span class="line">            enable: <span class="literal">true</span>,</span><br><span class="line">            idKey: <span class="string">"id"</span>,           <span class="comment">//自定义配置数据</span></span><br><span class="line">            pIdKey: <span class="string">"pId"</span>,</span><br><span class="line">            rootPId: <span class="number">2</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    view: &#123;</span><br><span class="line">        expandSpeed: <span class="string">""</span>,</span><br><span class="line">        dblClickExpand: <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    callback: &#123;</span><br><span class="line">        onRightClick: OnRightClick,          <span class="comment">//返回操作，右击树点击事件</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/23/ztree使用-右键点击操作菜单/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/22/Git使用教程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1201,7 +1361,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1223,7 +1383,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
