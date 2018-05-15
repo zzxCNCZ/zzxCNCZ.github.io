@@ -113,3 +113,191 @@ tags:
     </context>
 </generatorConfiguration>
 ```
+## 自定义分页插件com.zzxcn.plugin.OraclePaginationPlugin,继承PluginAdapter类
+```javascript
+
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
+package com.zzxcn.plugin;
+
+import java.util.List;
+import org.mybatis.generator.api.CommentGenerator;
+import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.PluginAdapter;
+import org.mybatis.generator.api.dom.java.Field;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.JavaVisibility;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.Document;
+import org.mybatis.generator.api.dom.xml.TextElement;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+
+public class OraclePaginationPlugin extends PluginAdapter {
+    public OraclePaginationPlugin() {
+    }
+
+    public boolean validate(List<String> list) {
+        return true;
+    }
+
+    public boolean modelExampleClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        topLevelClass.addImportedType(new FullyQualifiedJavaType("com.zzxcn.pojo.Page"));
+        String name = "Page";
+        CommentGenerator commentGenerator = this.context.getCommentGenerator();
+        Field field = new Field();
+        field.setVisibility(JavaVisibility.PROTECTED);
+        field.setType(new FullyQualifiedJavaType("com.zzxcn.pojo.Page"));
+        field.setName("Page");
+        commentGenerator.addFieldComment(field, introspectedTable);
+        topLevelClass.addField(field);
+        char c = name.charAt(0);
+        String camel = Character.toUpperCase(c) + name.substring(1);
+        Method method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setName("set" + camel);
+        method.addParameter(new Parameter(new FullyQualifiedJavaType("com.zzxcn.pojo.Page"), name));
+        method.addBodyLine("this." + name + "=" + name + ";");
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
+        topLevelClass.addMethod(method);
+        method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setReturnType(new FullyQualifiedJavaType("com.zzxcn.pojo.Page"));
+        method.setName("get" + camel);
+        method.addBodyLine("return " + name + ";");
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
+        topLevelClass.addMethod(method);
+        return true;
+    }
+
+    public boolean sqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {
+        XmlElement parentElement = document.getRootElement();
+        XmlElement paginationPrefixElement = new XmlElement("sql");
+        paginationPrefixElement.addAttribute(new Attribute("id", "OracleDialectPrefix"));
+        XmlElement pageStart = new XmlElement("if");
+        pageStart.addAttribute(new Attribute("test", "Page != null"));
+        pageStart.addElement(new TextElement("select * from ( select row_.*, rownum rownum_ from ( "));
+        paginationPrefixElement.addElement(pageStart);
+        parentElement.addElement(paginationPrefixElement);
+        XmlElement paginationSuffixElement = new XmlElement("sql");
+        paginationSuffixElement.addAttribute(new Attribute("id", "OracleDialectSuffix"));
+        XmlElement pageEnd = new XmlElement("if");
+        pageEnd.addAttribute(new Attribute("test", "Page != null"));
+        pageEnd.addElement(new TextElement("<![CDATA[ ) row_ ) where rownum_ > #{Page.begin} and rownum_ <= #{Page.end} ]]>"));
+        paginationSuffixElement.addElement(pageEnd);
+        parentElement.addElement(paginationSuffixElement);
+        return super.sqlMapDocumentGenerated(document, introspectedTable);
+    }
+
+    public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
+        XmlElement pageStart = new XmlElement("include");
+        pageStart.addAttribute(new Attribute("refid", "OracleDialectPrefix"));
+        element.getElements().add(0, pageStart);
+        XmlElement isNotNullElement = new XmlElement("include");
+        isNotNullElement.addAttribute(new Attribute("refid", "OracleDialectSuffix"));
+        element.getElements().add(isNotNullElement);
+        return true;
+    }
+}
+
+```
+## Page类
+```javascript
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
+package com.zzxcn.pojo;
+
+public class Page {
+    private int begin;
+    private int end;
+    private int length;
+    private int count;
+    private int current;
+    private int total;
+
+    public Page() {
+    }
+
+    public Page(int begin, int length) {
+        this.begin = begin;
+        this.length = length;
+        this.end = this.begin + this.length;
+        this.current = (int)Math.floor((double)this.begin * 1.0D / (double)this.length) + 1;
+    }
+
+    public Page(int begin, int length, int count) {
+        this(begin, length);
+        this.count = count;
+    }
+
+    public int getBegin() {
+        return this.begin;
+    }
+
+    public int getEnd() {
+        return this.end;
+    }
+
+    public void setEnd(int end) {
+        this.end = end;
+    }
+
+    public void setBegin(int begin) {
+        this.begin = begin;
+        if(this.length != 0) {
+            this.current = (int)Math.floor((double)this.begin * 1.0D / (double)this.length) + 1;
+        }
+
+    }
+
+    public int getLength() {
+        return this.length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+        if(this.begin != 0) {
+            this.current = (int)Math.floor((double)this.begin * 1.0D / (double)this.length) + 1;
+        }
+
+    }
+
+    public int getCount() {
+        return this.count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+        this.total = (int)Math.floor((double)this.count * 1.0D / (double)this.length);
+        if(this.count % this.length != 0) {
+            ++this.total;
+        }
+
+    }
+
+    public int getCurrent() {
+        return this.current;
+    }
+
+    public void setCurrent(int current) {
+        this.current = current;
+    }
+
+    public int getTotal() {
+        return this.total == 0?1:this.total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+}
+```
+## 自定义的插件创建方法：新建maven项目,写入方法,maven install,然后再项目中引用
