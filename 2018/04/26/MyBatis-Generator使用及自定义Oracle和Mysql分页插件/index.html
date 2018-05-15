@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MyBatis Generator," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="用MBG插件生成Pojo，PojoExample(条件类)，–Mapper(dao层接口)，–Mapper.xml文件，并重写PluginAdapter类，生成自定义分页代码。Maven加入插件，自定义分页插件依赖123456789101112131415161718192021222324252627282930&amp;lt;!--mybatis 逆向生成插件--&amp;gt;        &amp;lt;plu">
+<meta name="keywords" content="MyBatis Generator">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyBatis Generator使用及自定义Oracle和Mysql分页插件">
+<meta property="og:url" content="http://yoursite.com/2018/04/26/MyBatis-Generator使用及自定义Oracle和Mysql分页插件/index.html">
+<meta property="og:site_name" content="Zzx Blog">
+<meta property="og:description" content="用MBG插件生成Pojo，PojoExample(条件类)，–Mapper(dao层接口)，–Mapper.xml文件，并重写PluginAdapter类，生成自定义分页代码。Maven加入插件，自定义分页插件依赖123456789101112131415161718192021222324252627282930&amp;lt;!--mybatis 逆向生成插件--&amp;gt;        &amp;lt;plu">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-15T07:44:54.393Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MyBatis Generator使用及自定义Oracle和Mysql分页插件">
+<meta name="twitter:description" content="用MBG插件生成Pojo，PojoExample(条件类)，–Mapper(dao层接口)，–Mapper.xml文件，并重写PluginAdapter类，生成自定义分页代码。Maven加入插件，自定义分页插件依赖123456789101112131415161718192021222324252627282930&amp;lt;!--mybatis 逆向生成插件--&amp;gt;        &amp;lt;plu">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/26/MyBatis-Generator使用及自定义Oracle和Mysql分页插件/"/>
+
+
+
+
+
+  <title>MyBatis Generator使用及自定义Oracle和Mysql分页插件 | Zzx Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zzx Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Since 2017</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/26/MyBatis-Generator使用及自定义Oracle和Mysql分页插件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Banksys Zhuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zzx Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MyBatis Generator使用及自定义Oracle和Mysql分页插件</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-26T14:20:33+08:00">
+                2018-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/SpringMVC/" itemprop="url" rel="index">
+                    <span itemprop="name">SpringMVC</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/SpringMVC/MyBatis/" itemprop="url" rel="index">
+                    <span itemprop="name">MyBatis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="用MBG插件生成Pojo，PojoExample-条件类-，–Mapper-dao层接口-，–Mapper-xml文件，并重写PluginAdapter类，生成自定义分页代码。"><a href="#用MBG插件生成Pojo，PojoExample-条件类-，–Mapper-dao层接口-，–Mapper-xml文件，并重写PluginAdapter类，生成自定义分页代码。" class="headerlink" title="用MBG插件生成Pojo，PojoExample(条件类)，–Mapper(dao层接口)，–Mapper.xml文件，并重写PluginAdapter类，生成自定义分页代码。"></a>用MBG插件生成Pojo，PojoExample(条件类)，–Mapper(dao层接口)，–Mapper.xml文件，并重写PluginAdapter类，生成自定义分页代码。</h3><h2 id="Maven加入插件，自定义分页插件依赖"><a href="#Maven加入插件，自定义分页插件依赖" class="headerlink" title="Maven加入插件，自定义分页插件依赖"></a>Maven加入插件，自定义分页插件依赖</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--mybatis 逆向生成插件--&gt;</span><br><span class="line">        &lt;plugin&gt;</span><br><span class="line">            &lt;groupId&gt;org.mybatis.generator&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;artifactId&gt;mybatis-generator-maven-plugin&lt;/</span>artifactId&gt;</span><br><span class="line">            &lt;version&gt;<span class="number">1.3</span><span class="number">.5</span>&lt;<span class="regexp">/version&gt;</span></span><br><span class="line"><span class="regexp">            &lt;!-- 定义配置文件 --&gt;</span></span><br><span class="line"><span class="regexp">            &lt;configuration&gt;</span></span><br><span class="line"><span class="regexp">                &lt;configurationFile&gt;src/m</span>ain/resources/generatorConfig.xml&lt;<span class="regexp">/configurationFile&gt;</span></span><br><span class="line"><span class="regexp">                &lt;verbose&gt;true&lt;/</span>verbose&gt;</span><br><span class="line">                &lt;overwrite&gt;<span class="literal">true</span>&lt;<span class="regexp">/overwrite&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>configuration&gt;</span><br><span class="line">            &lt;executions&gt;</span><br><span class="line">                &lt;execution&gt;</span><br><span class="line">                    &lt;id&gt;Generate MyBatis Artifacts&lt;<span class="regexp">/id&gt;</span></span><br><span class="line"><span class="regexp">                &lt;/</span>execution&gt;</span><br><span class="line">            &lt;<span class="regexp">/executions&gt;</span></span><br><span class="line"><span class="regexp">            &lt;dependencies&gt;</span></span><br><span class="line"><span class="regexp">                &lt;dependency&gt;</span></span><br><span class="line"><span class="regexp">                    &lt;groupId&gt;org.mybatis.generator&lt;/g</span>roupId&gt;</span><br><span class="line">                    &lt;artifactId&gt;mybatis-generator-core&lt;<span class="regexp">/artifactId&gt;</span></span><br><span class="line"><span class="regexp">                    &lt;version&gt;1.3.5&lt;/</span>version&gt;</span><br><span class="line">                &lt;<span class="regexp">/dependency&gt;</span></span><br><span class="line"><span class="regexp">                 &lt;!-- 自定义插件 --&gt;</span></span><br><span class="line"><span class="regexp">                &lt;dependency&gt;</span></span><br><span class="line"><span class="regexp">                    &lt;groupId&gt;com.zzxcn&lt;/g</span>roupId&gt;</span><br><span class="line">                    &lt;artifactId&gt;PaginationPlugin&lt;<span class="regexp">/artifactId&gt;</span></span><br><span class="line"><span class="regexp">                    &lt;version&gt;1.0&lt;/</span>version&gt;</span><br><span class="line">                &lt;<span class="regexp">/dependency&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>dependencies&gt;</span><br><span class="line">        &lt;<span class="regexp">/plugin&gt;</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="generatorConfig-xml配置文件"><a href="#generatorConfig-xml配置文件" class="headerlink" title="generatorConfig.xml配置文件"></a>generatorConfig.xml配置文件</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span> ?&gt;</span><br><span class="line">&lt;!DOCTYPE generatorConfiguration PUBLIC</span><br><span class="line">        <span class="string">"-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"</span></span><br><span class="line">        <span class="string">"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"</span> &gt;</span><br><span class="line">&lt;generatorConfiguration&gt;</span><br><span class="line">    &lt;!-- 数据库配置文件 --&gt;</span><br><span class="line">    &lt;properties resource=<span class="string">"db/jdbc.properties"</span>  /&gt;</span><br><span class="line">    &lt;!-- 本地数据库驱动程序jar包的全路径 --&gt;</span><br><span class="line">    &lt;classPathEntry location=<span class="string">"E:/apache_maven/repository/com/oracle/driver/jdbc/14/jdbc-14.jar"</span>/&gt;</span><br><span class="line">    &lt;!--  MyBatis3Simple(简略模式),MyBatis3普通模式  --&gt;</span><br><span class="line">    &lt;context id=<span class="string">"context"</span> targetRuntime=<span class="string">"MyBatis3"</span>&gt;</span><br><span class="line">&lt;!--</span><br><span class="line">        &lt;plugin type=<span class="string">"org.mybatis.generator.plugins.RowBoundsPlugin"</span>&gt;&lt;/plugin&gt;</span><br><span class="line">--&gt;</span><br><span class="line">&lt;!--</span><br><span class="line">        &lt;plugin type=<span class="string">"com.xxg.mybatis.plugins.MySQLLimitPlugin"</span>&gt;&lt;/plugin&gt;</span><br><span class="line">--&gt;</span><br><span class="line">      &lt;!-- 自定义分页插件 --&gt;</span><br><span class="line">        &lt;plugin type=<span class="string">"com.zzxcn.plugin.OraclePaginationPlugin"</span>&gt;&lt;/plugin&gt;</span><br><span class="line">        &lt;commentGenerator&gt;</span><br><span class="line">            &lt;!--  关闭自动生成的注释  --&gt;</span><br><span class="line">            &lt;property name=<span class="string">"suppressAllComments"</span> value=<span class="string">"true"</span>/&gt;</span><br><span class="line">            &lt;property name=<span class="string">"suppressDate"</span> value=<span class="string">"true"</span>/&gt;</span><br><span class="line">        &lt;<span class="regexp">/commentGenerator&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">        &lt;jdbcConnection driverClass="$&#123;jdbc_driverClassName&#125;"</span></span><br><span class="line"><span class="regexp">                        connectionURL="$&#123;jdbc_url&#125;"</span></span><br><span class="line"><span class="regexp">                        userId="$&#123;jdbc_user&#125;"</span></span><br><span class="line"><span class="regexp">                        password="$&#123;jdbc_pwd&#125;"&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>jdbcConnection&gt;</span><br><span class="line"></span><br><span class="line">        &lt;javaTypeResolver&gt;</span><br><span class="line">            &lt;property name=<span class="string">"forceBigDecimals"</span> value=<span class="string">"false"</span>/&gt;</span><br><span class="line">        &lt;<span class="regexp">/javaTypeResolver&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">        &lt;javaModelGenerator targetPackage="com.zzx.pojo"</span></span><br><span class="line"><span class="regexp">                            targetProject="src/m</span>ain/java<span class="string">"&gt;</span></span><br><span class="line"><span class="string">            &lt;property name="</span>enableSubPackages<span class="string">" value="</span><span class="literal">true</span><span class="string">"/&gt;</span></span><br><span class="line"><span class="string">            &lt;property name="</span>trimStrings<span class="string">" value="</span><span class="literal">true</span><span class="string">"/&gt;</span></span><br><span class="line"><span class="string">        &lt;/javaModelGenerator&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        &lt;sqlMapGenerator targetPackage="</span>auto<span class="string">" targetProject="</span>src/main/resources/mybatis<span class="string">"&gt;</span></span><br><span class="line"><span class="string">            &lt;property name="</span>enableSubPackages<span class="string">" value="</span><span class="literal">true</span><span class="string">"/&gt;</span></span><br><span class="line"><span class="string">        &lt;/sqlMapGenerator&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        &lt;javaClientGenerator type="</span>XMLMAPPER<span class="string">" targetPackage="</span>com.zzx.dao.auto<span class="string">"</span></span><br><span class="line"><span class="string">                             targetProject="</span>src/main/java<span class="string">"&gt;</span></span><br><span class="line"><span class="string">            &lt;property name="</span>enableSubPackages<span class="string">" value="</span><span class="literal">true</span><span class="string">"/&gt;</span></span><br><span class="line"><span class="string">        &lt;/javaClientGenerator&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        &lt;!--   enableCountByExample="</span><span class="literal">false</span><span class="string">"</span></span><br><span class="line"><span class="string">              enableUpdateByExample="</span><span class="literal">false</span><span class="string">"</span></span><br><span class="line"><span class="string">              enableDeleteByExample="</span><span class="literal">false</span><span class="string">"</span></span><br><span class="line"><span class="string">              enableSelectByExample="</span><span class="literal">false</span><span class="string">"</span></span><br><span class="line"><span class="string">              selectByExampleQueryId="</span><span class="literal">false</span><span class="string">" --&gt;</span></span><br><span class="line"><span class="string">       &lt;!-- &lt;table tableName="</span>TD_ADMIN_ROLE<span class="string">" mapperName="</span>RoleDao<span class="string">" domainObjectName="</span>Role<span class="string">"&gt;</span></span><br><span class="line"><span class="string">            &lt;property name="</span>useActualColumnNames<span class="string">" value="</span><span class="literal">false</span><span class="string">"/&gt;</span></span><br><span class="line"><span class="string">        &lt;/table&gt;--&gt;</span></span><br><span class="line"><span class="string">        &lt;!--&lt;table tableName="</span>TE_STRATEGY_OPTION<span class="string">" mapperName="</span>OptionDao<span class="string">" domainObjectName="</span>Option<span class="string">"&gt;</span></span><br><span class="line"><span class="string">            &lt;property name="</span>useActualColumnNames<span class="string">" value="</span><span class="literal">false</span><span class="string">"/&gt;</span></span><br><span class="line"><span class="string">        &lt;/table&gt;--&gt;</span></span><br><span class="line"><span class="string">        &lt;table tableName="</span>TE_STRATEGY_FENCE<span class="string">" mapperName="</span>FenceDao<span class="string">" domainObjectName="</span>Fence<span class="string">"&gt;</span></span><br><span class="line"><span class="string">            &lt;property name="</span>useActualColumnNames<span class="string">" value="</span><span class="literal">false</span><span class="string">"/&gt;</span></span><br><span class="line"><span class="string">        &lt;/table&gt;</span></span><br><span class="line"><span class="string">    &lt;/context&gt;</span></span><br><span class="line"><span class="string">&lt;/generatorConfiguration&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="自定义分页插件com-zzxcn-plugin-OraclePaginationPlugin-继承PluginAdapter类"><a href="#自定义分页插件com-zzxcn-plugin-OraclePaginationPlugin-继承PluginAdapter类" class="headerlink" title="自定义分页插件com.zzxcn.plugin.OraclePaginationPlugin,继承PluginAdapter类"></a>自定义分页插件com.zzxcn.plugin.OraclePaginationPlugin,继承PluginAdapter类</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Source code recreated from a .class file by IntelliJ IDEA</span></span><br><span class="line"><span class="comment">// (powered by Fernflower decompiler)</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line">package com.zzxcn.plugin;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.generator.api.CommentGenerator;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.generator.api.IntrospectedTable;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.generator.api.PluginAdapter;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.generator.api.dom.java.Field;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.generator.api.dom.java.JavaVisibility;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.generator.api.dom.java.Method;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.generator.api.dom.java.Parameter;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.generator.api.dom.java.TopLevelClass;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.generator.api.dom.xml.Attribute;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.generator.api.dom.xml.Document;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.generator.api.dom.xml.TextElement;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.generator.api.dom.xml.XmlElement;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">OraclePaginationPlugin</span> <span class="keyword">extends</span> <span class="title">PluginAdapter</span> </span>&#123;</span><br><span class="line">    public OraclePaginationPlugin() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public boolean validate(List&lt;<span class="built_in">String</span>&gt; list) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public boolean modelExampleClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) &#123;</span><br><span class="line">        topLevelClass.addImportedType(<span class="keyword">new</span> FullyQualifiedJavaType(<span class="string">"com.zzxcn.pojo.Page"</span>));</span><br><span class="line">        <span class="built_in">String</span> name = <span class="string">"Page"</span>;</span><br><span class="line">        CommentGenerator commentGenerator = <span class="keyword">this</span>.context.getCommentGenerator();</span><br><span class="line">        Field field = <span class="keyword">new</span> Field();</span><br><span class="line">        field.setVisibility(JavaVisibility.PROTECTED);</span><br><span class="line">        field.setType(<span class="keyword">new</span> FullyQualifiedJavaType(<span class="string">"com.zzxcn.pojo.Page"</span>));</span><br><span class="line">        field.setName(<span class="string">"Page"</span>);</span><br><span class="line">        commentGenerator.addFieldComment(field, introspectedTable);</span><br><span class="line">        topLevelClass.addField(field);</span><br><span class="line">        char c = name.charAt(<span class="number">0</span>);</span><br><span class="line">        <span class="built_in">String</span> camel = Character.toUpperCase(c) + name.substring(<span class="number">1</span>);</span><br><span class="line">        Method method = <span class="keyword">new</span> Method();</span><br><span class="line">        method.setVisibility(JavaVisibility.PUBLIC);</span><br><span class="line">        method.setName(<span class="string">"set"</span> + camel);</span><br><span class="line">        method.addParameter(<span class="keyword">new</span> Parameter(<span class="keyword">new</span> FullyQualifiedJavaType(<span class="string">"com.zzxcn.pojo.Page"</span>), name));</span><br><span class="line">        method.addBodyLine(<span class="string">"this."</span> + name + <span class="string">"="</span> + name + <span class="string">";"</span>);</span><br><span class="line">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span><br><span class="line">        topLevelClass.addMethod(method);</span><br><span class="line">        method = <span class="keyword">new</span> Method();</span><br><span class="line">        method.setVisibility(JavaVisibility.PUBLIC);</span><br><span class="line">        method.setReturnType(<span class="keyword">new</span> FullyQualifiedJavaType(<span class="string">"com.zzxcn.pojo.Page"</span>));</span><br><span class="line">        method.setName(<span class="string">"get"</span> + camel);</span><br><span class="line">        method.addBodyLine(<span class="string">"return "</span> + name + <span class="string">";"</span>);</span><br><span class="line">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span><br><span class="line">        topLevelClass.addMethod(method);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public boolean sqlMapDocumentGenerated(Document <span class="built_in">document</span>, IntrospectedTable introspectedTable) &#123;</span><br><span class="line">        XmlElement parentElement = <span class="built_in">document</span>.getRootElement();</span><br><span class="line">        XmlElement paginationPrefixElement = <span class="keyword">new</span> XmlElement(<span class="string">"sql"</span>);</span><br><span class="line">        paginationPrefixElement.addAttribute(<span class="keyword">new</span> Attribute(<span class="string">"id"</span>, <span class="string">"OracleDialectPrefix"</span>));</span><br><span class="line">        XmlElement pageStart = <span class="keyword">new</span> XmlElement(<span class="string">"if"</span>);</span><br><span class="line">        pageStart.addAttribute(<span class="keyword">new</span> Attribute(<span class="string">"test"</span>, <span class="string">"Page != null"</span>));</span><br><span class="line">        pageStart.addElement(<span class="keyword">new</span> TextElement(<span class="string">"select * from ( select row_.*, rownum rownum_ from ( "</span>));</span><br><span class="line">        paginationPrefixElement.addElement(pageStart);</span><br><span class="line">        parentElement.addElement(paginationPrefixElement);</span><br><span class="line">        XmlElement paginationSuffixElement = <span class="keyword">new</span> XmlElement(<span class="string">"sql"</span>);</span><br><span class="line">        paginationSuffixElement.addAttribute(<span class="keyword">new</span> Attribute(<span class="string">"id"</span>, <span class="string">"OracleDialectSuffix"</span>));</span><br><span class="line">        XmlElement pageEnd = <span class="keyword">new</span> XmlElement(<span class="string">"if"</span>);</span><br><span class="line">        pageEnd.addAttribute(<span class="keyword">new</span> Attribute(<span class="string">"test"</span>, <span class="string">"Page != null"</span>));</span><br><span class="line">        pageEnd.addElement(<span class="keyword">new</span> TextElement(<span class="string">"&lt;![CDATA[ ) row_ ) where rownum_ &gt; #&#123;Page.begin&#125; and rownum_ &lt;= #&#123;Page.end&#125; ]]&gt;"</span>));</span><br><span class="line">        paginationSuffixElement.addElement(pageEnd);</span><br><span class="line">        parentElement.addElement(paginationSuffixElement);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.sqlMapDocumentGenerated(<span class="built_in">document</span>, introspectedTable);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated(XmlElement element, IntrospectedTable introspectedTable) &#123;</span><br><span class="line">        XmlElement pageStart = <span class="keyword">new</span> XmlElement(<span class="string">"include"</span>);</span><br><span class="line">        pageStart.addAttribute(<span class="keyword">new</span> Attribute(<span class="string">"refid"</span>, <span class="string">"OracleDialectPrefix"</span>));</span><br><span class="line">        element.getElements().add(<span class="number">0</span>, pageStart);</span><br><span class="line">        XmlElement isNotNullElement = <span class="keyword">new</span> XmlElement(<span class="string">"include"</span>);</span><br><span class="line">        isNotNullElement.addAttribute(<span class="keyword">new</span> Attribute(<span class="string">"refid"</span>, <span class="string">"OracleDialectSuffix"</span>));</span><br><span class="line">        element.getElements().add(isNotNullElement);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Page类"><a href="#Page类" class="headerlink" title="Page类"></a>Page类</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Source code recreated from a .class file by IntelliJ IDEA</span></span><br><span class="line"><span class="comment">// (powered by Fernflower decompiler)</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line">package com.zzxcn.pojo;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">Page</span> </span>&#123;</span><br><span class="line">    private int begin;</span><br><span class="line">    private int end;</span><br><span class="line">    private int length;</span><br><span class="line">    private int count;</span><br><span class="line">    private int current;</span><br><span class="line">    private int total;</span><br><span class="line"></span><br><span class="line">    public Page() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Page(int begin, int length) &#123;</span><br><span class="line">        <span class="keyword">this</span>.begin = begin;</span><br><span class="line">        <span class="keyword">this</span>.length = length;</span><br><span class="line">        <span class="keyword">this</span>.end = <span class="keyword">this</span>.begin + <span class="keyword">this</span>.length;</span><br><span class="line">        <span class="keyword">this</span>.current = (int)<span class="built_in">Math</span>.floor((double)<span class="keyword">this</span>.begin * <span class="number">1.0</span>D / (double)<span class="keyword">this</span>.length) + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Page(int begin, int length, int count) &#123;</span><br><span class="line">        <span class="keyword">this</span>(begin, length);</span><br><span class="line">        <span class="keyword">this</span>.count = count;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getBegin() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.begin;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getEnd() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.end;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> setEnd(int end) &#123;</span><br><span class="line">        <span class="keyword">this</span>.end = end;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> setBegin(int begin) &#123;</span><br><span class="line">        <span class="keyword">this</span>.begin = begin;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.length != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">this</span>.current = (int)<span class="built_in">Math</span>.floor((double)<span class="keyword">this</span>.begin * <span class="number">1.0</span>D / (double)<span class="keyword">this</span>.length) + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getLength() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> setLength(int length) &#123;</span><br><span class="line">        <span class="keyword">this</span>.length = length;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.begin != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">this</span>.current = (int)<span class="built_in">Math</span>.floor((double)<span class="keyword">this</span>.begin * <span class="number">1.0</span>D / (double)<span class="keyword">this</span>.length) + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getCount() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.count;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> setCount(int count) &#123;</span><br><span class="line">        <span class="keyword">this</span>.count = count;</span><br><span class="line">        <span class="keyword">this</span>.total = (int)<span class="built_in">Math</span>.floor((double)<span class="keyword">this</span>.count * <span class="number">1.0</span>D / (double)<span class="keyword">this</span>.length);</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.count % <span class="keyword">this</span>.length != <span class="number">0</span>) &#123;</span><br><span class="line">            ++<span class="keyword">this</span>.total;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getCurrent() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.current;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> setCurrent(int current) &#123;</span><br><span class="line">        <span class="keyword">this</span>.current = current;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getTotal() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.total == <span class="number">0</span>?<span class="number">1</span>:<span class="keyword">this</span>.total;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> setTotal(int total) &#123;</span><br><span class="line">        <span class="keyword">this</span>.total = total;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="自定义的插件创建方法：新建maven项目-写入方法-maven-install-然后再项目中引用"><a href="#自定义的插件创建方法：新建maven项目-写入方法-maven-install-然后再项目中引用" class="headerlink" title="自定义的插件创建方法：新建maven项目,写入方法,maven install,然后再项目中引用"></a>自定义的插件创建方法：新建maven项目,写入方法,maven install,然后再项目中引用</h2>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Donate comment here</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Banksys Zhuang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Banksys Zhuang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MyBatis-Generator/" rel="tag"># MyBatis Generator</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/18/Spring切面记录操作日志/" rel="next" title="Spring切面记录操作日志">
+                <i class="fa fa-chevron-left"></i> Spring切面记录操作日志
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="uyan_frame"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Banksys Zhuang" />
+            
+              <p class="site-author-name" itemprop="name">Banksys Zhuang</p>
+              <p class="site-description motion-element" itemprop="description">Technology</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3446703702/profile?topnav=1&wvr=6&is_all=1" target="_blank" title="微博">
+                    
+                      <i class="fa fa-fw fa-globe"></i>微博</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.zhihu.com/people/zhuang-ze-xin-83/activities" target="_blank" title="知乎">
+                    
+                      <i class="fa fa-fw fa-globe"></i>知乎</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#用MBG插件生成Pojo，PojoExample-条件类-，–Mapper-dao层接口-，–Mapper-xml文件，并重写PluginAdapter类，生成自定义分页代码。"><span class="nav-number">1.</span> <span class="nav-text">用MBG插件生成Pojo，PojoExample(条件类)，–Mapper(dao层接口)，–Mapper.xml文件，并重写PluginAdapter类，生成自定义分页代码。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Maven加入插件，自定义分页插件依赖"><span class="nav-number"></span> <span class="nav-text">Maven加入插件，自定义分页插件依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#generatorConfig-xml配置文件"><span class="nav-number"></span> <span class="nav-text">generatorConfig.xml配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义分页插件com-zzxcn-plugin-OraclePaginationPlugin-继承PluginAdapter类"><span class="nav-number"></span> <span class="nav-text">自定义分页插件com.zzxcn.plugin.OraclePaginationPlugin,继承PluginAdapter类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Page类"><span class="nav-number"></span> <span class="nav-text">Page类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义的插件创建方法：新建maven项目-写入方法-maven-install-然后再项目中引用"><span class="nav-number"></span> <span class="nav-text">自定义的插件创建方法：新建maven项目,写入方法,maven install,然后再项目中引用</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Banksys Zhuang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2149501"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
