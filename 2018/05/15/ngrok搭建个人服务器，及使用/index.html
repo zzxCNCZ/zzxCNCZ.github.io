@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Zzx Blog">
 <meta property="og:description" content="ngrok搭建个人节点,条件： 服务器一台,含公网ip（本文用的阿里云centos） 域名一个,并解析到服务器ip（最好用泛解析,本文例子：域名zzx.com,  泛解析A类地址“ * ngrok” 到服务器IP ),则之后ngrok用的域名即为ngrok.zzx.com步骤 安装git 和Golang 1apt-get install build-essential golang mercuri">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-15T08:49:31.441Z">
+<meta property="og:updated_time" content="2018-07-23T07:18:05.783Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ngrok搭建个人服务器，及使用">
 <meta name="twitter:description" content="ngrok搭建个人节点,条件： 服务器一台,含公网ip（本文用的阿里云centos） 域名一个,并解析到服务器ip（最好用泛解析,本文例子：域名zzx.com,  泛解析A类地址“ * ngrok” 到服务器IP ),则之后ngrok用的域名即为ngrok.zzx.com步骤 安装git 和Golang 1apt-get install build-essential golang mercuri">
@@ -380,8 +380,12 @@
 <li><p>执行完成后需要替换证书</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp base.pem assets/client/tls/ngrokroot.crt</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>编译,编译成功后会在bin目录下找到ngrokd和ngrok这两个文件。其中ngrokd 就是服务端程序,<br>ngrok是linux的客户端程序， 如果别的linux机器需要穿透，则可以使用该程序。</p>
+<li><p>编译:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make release-server release-client</span><br></pre></td></tr></table></figure>
 </li>
+</ol>
+<p>-编译成功后会在bin目录下找到ngrokd和ngrok这两个文件。其中ngrokd 就是服务端程序,<br>ngrok是linux的客户端程序， 如果别的linux机器需要穿透，则可以使用该程序。</p>
+<ol>
 <li><p>启动程序,http端口80,https端口443，这两处可以修改，如果服务器部署了web项目会占用这<br>两个端口,只用来映射可以随意设置如：90,9443</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/ngrokd -tlsKey=server.key -tlsCrt=server.crt -domain=<span class="string">"ngrok.zzx.com"</span> -httpAddr=<span class="string">":80"</span> -httpsAddr=<span class="string">":443"</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -489,6 +493,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/07/26/JavaCastException-devtools/" rel="prev" title="JavaCastException-devtools">
+                JavaCastException-devtools <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -573,7 +581,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -595,7 +603,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

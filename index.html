@@ -262,6 +262,173 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/26/JavaCastException-devtools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Banksys Zhuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zzx Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/26/JavaCastException-devtools/" itemprop="url">JavaCastException-devtools</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-26T17:10:05+08:00">
+                2018-07-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/SpringBoot/" itemprop="url" rel="index">
+                    <span itemprop="name">SpringBoot</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="研究quartz的过程中-碰到一个bug-不过早晚也会遇到的bug-经过面向搜索引擎编程总算找到"><a href="#研究quartz的过程中-碰到一个bug-不过早晚也会遇到的bug-经过面向搜索引擎编程总算找到" class="headerlink" title="研究quartz的过程中,碰到一个bug,不过早晚也会遇到的bug.经过面向搜索引擎编程总算找到"></a>研究quartz的过程中,碰到一个bug,不过早晚也会遇到的bug.经过面向搜索引擎编程总算找到</h2><h2 id="了问题所在-再次记录一下。"><a href="#了问题所在-再次记录一下。" class="headerlink" title="了问题所在,再次记录一下。"></a>了问题所在,再次记录一下。</h2><ul>
+<li><p>先上代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line"> protected <span class="keyword">void</span> executeInternal(JobExecutionContext context) throws JobExecutionException &#123;</span><br><span class="line"> ScheduleJobEntity scheduleJobtest=<span class="keyword">new</span> ScheduleJobEntity();</span><br><span class="line"> System.out.println(context.getMergedJobDataMap()</span><br><span class="line">     .get(ScheduleJobEntity.JOB_PARAM_KEY).getClass().getClassLoader());</span><br><span class="line"> System.out.println(scheduleJobtest.getClass().getClassLoader());</span><br><span class="line"> <span class="keyword">if</span> (context.getMergedJobDataMap()</span><br><span class="line">     .get(ScheduleJobEntity.JOB_PARAM_KEY) <span class="keyword">instanceof</span> ScheduleJobEntity) &#123;</span><br><span class="line">   scheduleJobtest = (ScheduleJobEntity) context.getMergedJobDataMap()</span><br><span class="line">       .get(ScheduleJobEntity.JOB_PARAM_KEY);</span><br><span class="line"> &#125;</span><br><span class="line"> .....省略</span><br><span class="line"> &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">   logger.error(<span class="string">"任务执行失败，任务ID："</span> + scheduleJob.getJobId(), e);</span><br><span class="line"></span><br><span class="line">   <span class="comment">//任务执行总时长</span></span><br><span class="line">   long times = System.currentTimeMillis() - startTime;</span><br><span class="line">   log.setTimes((int)times);</span><br><span class="line"></span><br><span class="line">   <span class="comment">//任务状态    0：成功    1：失败</span></span><br><span class="line">   log.setStatus(<span class="number">1</span>);</span><br><span class="line">   log.setError(StringUtils.substring(e.toString(), <span class="number">0</span>, <span class="number">2000</span>));</span><br><span class="line"> &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">   scheduleJobLogService.insert(log);</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上面代码中的context 包含和任务执行的entity,但是是个object,需要转换一下，一开始</p>
+</li>
+<li>使用强转,运行到转换的地方就会报出JavaCastException: com.zzx.springboot.modules.job.entity.ScheduleJobEntity can not be casted to<br>com.zzx.springboot.modules.job.entity.ScheduleJobEntity</li>
+<li>明明是两个一样类型的entity,但就是不能转换,经过多方查找,总算找到问题所在,</li>
+<li>原因是因为devtools的热部署导致了我的ScheduleJobEntit实体是由devtools<br>的restartClassLoader加载的,导致不是原生的appclassloader</li>
+<li>解决方案</li>
+</ul>
+<ol>
+<li>不用devtools</li>
+<li>idea安装Jrebel插件(好用的一笔)</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/15/ngrok搭建个人服务器，及使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1776,174 +1943,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/04/SpringMVC整合Mybatis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Banksys Zhuang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zzx Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/04/SpringMVC整合Mybatis/" itemprop="url">SpringMVC整合Mybatis</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-04T17:05:09+08:00">
-                2017-12-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/SpringMVC/" itemprop="url" rel="index">
-                    <span itemprop="name">SpringMVC</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/SpringMVC/MyBatis/" itemprop="url" rel="index">
-                    <span itemprop="name">MyBatis</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Maven依赖-mybatis-mysql-oracle-druid连接池"><a href="#Maven依赖-mybatis-mysql-oracle-druid连接池" class="headerlink" title="Maven依赖(mybatis,mysql,oracle,druid连接池)"></a>Maven依赖(mybatis,mysql,oracle,druid连接池)</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- mybatis/spring包 --&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.mybatis&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;artifactId&gt;mybatis&lt;/</span>artifactId&gt;</span><br><span class="line">            &lt;version&gt;<span class="number">3.4</span><span class="number">.1</span>&lt;<span class="regexp">/version&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>dependency&gt;</span><br><span class="line"></span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.mybatis&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;artifactId&gt;mybatis-spring&lt;/</span>artifactId&gt;</span><br><span class="line">            &lt;version&gt;<span class="number">1.3</span><span class="number">.0</span>&lt;<span class="regexp">/version&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>dependency&gt;</span><br><span class="line"></span><br><span class="line">        &lt;!--mysql驱动包--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;mysql&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;artifactId&gt;mysql-connector-java&lt;/</span>artifactId&gt;</span><br><span class="line">            &lt;version&gt;<span class="number">5.1</span><span class="number">.35</span>&lt;<span class="regexp">/version&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>dependency&gt;</span><br><span class="line"></span><br><span class="line">        &lt;!-- Druid --&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;com.alibaba&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;artifactId&gt;druid&lt;/</span>artifactId&gt;</span><br><span class="line">            &lt;version&gt;<span class="number">1.0</span><span class="number">.26</span>&lt;<span class="regexp">/version&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>dependency&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &lt;!-- oracle driver --&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;com.oracle.driver&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">            &lt;artifactId&gt;jdbc&lt;/</span>artifactId&gt;</span><br><span class="line">            &lt;version&gt;<span class="number">14</span>&lt;<span class="regexp">/version&gt;</span></span><br><span class="line"><span class="regexp">            &lt;scope&gt;runtime&lt;/</span>scope&gt;</span><br><span class="line">        &lt;<span class="regexp">/dependency&gt;</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/04/SpringMVC整合Mybatis/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1998,7 +1997,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2020,7 +2019,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
