@@ -39,7 +39,11 @@ openssl x509 -req -in server.csr -CA base.pem -CAkey base.key -CAcreateserial -d
 ```javascript
 cp base.pem assets/client/tls/ngrokroot.crt
 ```
-5. 编译,编译成功后会在bin目录下找到ngrokd和ngrok这两个文件。其中ngrokd 就是服务端程序,
+5. 编译:
+```javascript
+make release-server release-client
+```
+-编译成功后会在bin目录下找到ngrokd和ngrok这两个文件。其中ngrokd 就是服务端程序,
 ngrok是linux的客户端程序， 如果别的linux机器需要穿透，则可以使用该程序。
 6. 启动程序,http端口80,https端口443，这两处可以修改，如果服务器部署了web项目会占用这
 两个端口,只用来映射可以随意设置如：90,9443
