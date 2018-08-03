@@ -82,7 +82,7 @@
 <meta name="description" content="Technology">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Zzx Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://blog.zhuangzexin.top/index.html">
 <meta property="og:site_name" content="Zzx Blog">
 <meta property="og:description" content="Technology">
 <meta property="og:locale" content="zh-Hans">
@@ -118,7 +118,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://blog.zhuangzexin.top/"/>
 
 
 
@@ -262,7 +262,159 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/26/JavaCastException-devtools/">
+    <link itemprop="mainEntityOfPage" href="http://blog.zhuangzexin.top/2018/08/03/axios下载文件总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Banksys Zhuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zzx Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/03/axios下载文件总结/" itemprop="url">axios下载文件总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-03T17:01:44+08:00">
+                2018-08-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="总结关于axios下载文件所遇到的问题"><a href="#总结关于axios下载文件所遇到的问题" class="headerlink" title="总结关于axios下载文件所遇到的问题"></a>总结关于axios下载文件所遇到的问题</h2><ol>
+<li>下载文件通常用a标签跳转url，但是需要手动处理参数，比如加token等，参数过多时不适用</li>
+<li>axios下载通常方式为添加response拦截的方式<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// contenttype为后端返回的type，可以自定义</span></span><br><span class="line"><span class="keyword">if</span> (res.headers &amp;&amp; (res.headers[<span class="string">'content-type'</span>] === <span class="string">'application/x-msdownload'</span> || res.headers[<span class="string">'content-type'</span>] === <span class="string">'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'</span>)) &#123;</span><br><span class="line">  downloadUrl(res.request.responseURL)</span><br><span class="line">  <span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// download url</span></span><br><span class="line"><span class="keyword">const</span> downloadUrl = <span class="function"><span class="params">url</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> iframe = <span class="built_in">document</span>.createElement(<span class="string">'iframe'</span>)</span><br><span class="line">  iframe.style.display = <span class="string">'none'</span></span><br><span class="line">  iframe.src = url</span><br><span class="line">  iframe.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">document</span>.body.removeChild(iframe)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">document</span>.body.appendChild(iframe)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li>这种方式通过构建iframe来跳转下载
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/03/axios下载文件总结/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.zhuangzexin.top/2018/07/26/JavaCastException-devtools/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Banksys Zhuang">
@@ -429,7 +581,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/15/ngrok搭建个人服务器，及使用/">
+    <link itemprop="mainEntityOfPage" href="http://blog.zhuangzexin.top/2018/05/15/ngrok搭建个人服务器，及使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Banksys Zhuang">
@@ -598,7 +750,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/26/MyBatis-Generator使用及自定义Oracle和Mysql分页插件/">
+    <link itemprop="mainEntityOfPage" href="http://blog.zhuangzexin.top/2018/04/26/MyBatis-Generator使用及自定义Oracle和Mysql分页插件/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Banksys Zhuang">
@@ -766,7 +918,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/Spring切面记录操作日志/">
+    <link itemprop="mainEntityOfPage" href="http://blog.zhuangzexin.top/2018/04/18/Spring切面记录操作日志/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Banksys Zhuang">
@@ -941,7 +1093,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/SpringBoot项目部署问题/">
+    <link itemprop="mainEntityOfPage" href="http://blog.zhuangzexin.top/2018/04/08/SpringBoot项目部署问题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Banksys Zhuang">
@@ -1120,7 +1272,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/关于JavaBean-POJO/">
+    <link itemprop="mainEntityOfPage" href="http://blog.zhuangzexin.top/2018/03/20/关于JavaBean-POJO/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Banksys Zhuang">
@@ -1267,7 +1419,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/06/Spring依赖注入方式/">
+    <link itemprop="mainEntityOfPage" href="http://blog.zhuangzexin.top/2018/03/06/Spring依赖注入方式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Banksys Zhuang">
@@ -1434,7 +1586,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/05/SpringBoot注解/">
+    <link itemprop="mainEntityOfPage" href="http://blog.zhuangzexin.top/2018/03/05/SpringBoot注解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Banksys Zhuang">
@@ -1613,7 +1765,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/05/Spring注解/">
+    <link itemprop="mainEntityOfPage" href="http://blog.zhuangzexin.top/2018/03/05/Spring注解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Banksys Zhuang">
@@ -1775,179 +1927,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/05/SpringBoot入门/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Banksys Zhuang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zzx Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/05/SpringBoot入门/" itemprop="url">SpringBoot入门</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-05T15:00:48+08:00">
-                2018-03-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/SpringBoot/" itemprop="url" rel="index">
-                    <span itemprop="name">SpringBoot</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/SpringBoot/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="SpringBoot依赖"><a href="#SpringBoot依赖" class="headerlink" title="SpringBoot依赖"></a>SpringBoot依赖</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- springboot组件--&gt;</span><br><span class="line">&lt;parent&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">		&lt;artifactId&gt;spring-boot-starter-parent&lt;/</span>artifactId&gt;</span><br><span class="line">		&lt;version&gt;<span class="number">1.5</span><span class="number">.9</span>.RELEASE&lt;<span class="regexp">/version&gt;</span></span><br><span class="line"><span class="regexp">	&lt;/</span>parent&gt;</span><br><span class="line"></span><br><span class="line">&lt;properties&gt;</span><br><span class="line">        &lt;project.build.sourceEncoding&gt;UTF<span class="number">-8</span>&lt;<span class="regexp">/project.build.sourceEncoding&gt;</span></span><br><span class="line"><span class="regexp">        &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/</span>project.reporting.outputEncoding&gt;</span><br><span class="line">        &lt;java.version&gt;<span class="number">1.8</span>&lt;<span class="regexp">/java.version&gt;</span></span><br><span class="line"><span class="regexp">        &lt;servlet.version&gt;3.1.0&lt;/</span>servlet.version&gt;</span><br><span class="line">        &lt;junit.version&gt;<span class="number">4.12</span>&lt;<span class="regexp">/junit.version&gt;</span></span><br><span class="line"><span class="regexp">        &lt;jedis.version&gt;2.9.0&lt;/</span>jedis.version&gt;</span><br><span class="line">        &lt;druid.version&gt;<span class="number">1.1</span><span class="number">.6</span>&lt;<span class="regexp">/druid.version&gt;</span></span><br><span class="line"><span class="regexp">        &lt;mybatisplus.version&gt;2.1.6&lt;/my</span>batisplus.version&gt;</span><br><span class="line">        &lt;mybatisplus.spring.boot.version&gt;<span class="number">1.0</span><span class="number">.5</span>&lt;<span class="regexp">/mybatisplus.spring.boot.version&gt;</span></span><br><span class="line"><span class="regexp">        &lt;mysql.version&gt;5.1.38&lt;/my</span>sql.version&gt;</span><br><span class="line">        &lt;commons.lang.version&gt;<span class="number">2.6</span>&lt;<span class="regexp">/commons.lang.version&gt;</span></span><br><span class="line"><span class="regexp">        &lt;commons.fileupload.version&gt;1.3.1&lt;/</span>commons.fileupload.version&gt;</span><br><span class="line">        &lt;commons.io.version&gt;<span class="number">2.5</span>&lt;<span class="regexp">/commons.io.version&gt;</span></span><br><span class="line"><span class="regexp">        &lt;commons.codec.version&gt;1.10&lt;/</span>commons.codec.version&gt;</span><br><span class="line">        &lt;fastjson.version&gt;<span class="number">1.2</span><span class="number">.45</span>&lt;<span class="regexp">/fastjson.version&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>properties&gt;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/05/SpringBoot入门/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1997,7 +1981,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2008,7 +1992,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2019,7 +2003,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
