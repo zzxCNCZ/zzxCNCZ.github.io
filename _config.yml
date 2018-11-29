@@ -84,5 +84,5 @@ theme: next
 ##git@github.com:andybroker/andybroker.github.io.git  https://github.com/zzxCNCZ/zzxCNCZ.github.io.git
 deploy:
   type: git
-  repo: git@github.com:zzxCNCZ/zzxCNCZ.github.io.git
+  repo: root@149.129.93.244:blog.git
   branch: master
