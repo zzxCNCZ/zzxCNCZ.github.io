@@ -28,6 +28,70 @@ tags:
 * hexo deploy 部署hexo ,主配置文件配置好master分支
 * hexo new "page" 新建md文件。然后编辑
 
-##进阶教程
+##进阶教程——讲博客部署到云主机
+1. 配置SSH公钥登陆
+    * 本机生成ssh key，使用过github的话，就已经生成过了，在根目录下.ssh文件夹内
+id_rsa.pub是公钥id_rsa是私钥
+    * 远程到主机，将公钥保存到云主机$HOME/.ssh/authorized_keys文件中（把公钥追加
+到authorized_keys文件末尾），方法：将公钥文件复制到云主机.ssh目录下，然后输入命令
+cat >> .ssh/authorized_keys' < ~/.ssh/id_rsa.pub即可
+    * 然后就可以直接用命令登陆 ssh root@ip
+    * [参考文章](http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html)
+2. 安装 git 和 nginx
+    ````
+    apt-get update
+    apt-get install git-core nginx
+    ````
+3. 配置 Nginx
+    ````
+    mkdir /var/www/blog
+    ````
+    - /var/www/blog目录用于放置生成的静态文件
+    ````
+    vim /etc/nginx/conf.d/blog.conf
+    ````
+    - 编写 nginx 配置文件
+    ````
+    server
+    {
+        listen 80;
+        root /var/www/blog;
+    }
+    ````
+    - 重启 nginx
+    ````
+    systemctl restart nginx
+    ````
+4. 配置 Git Hooks
+    - 创建 Git 裸仓库，blog.git作为远程 Git 仓库，Hexo 在本地生成的博客静态文
+件可以通过 push 与其同步。
+    ````
+    mkdir ~/blog.git && cd ~/blog.git
+    git init --bare
+    ````
+    - 配置 Hooks 脚本,post-receive脚本将在blog.git仓库接收到 push 时执行。
+              
+    ````
+    vim ./hooks/post-receive
+    ````
+    - 脚本作用：删除原有的/var/www/blog目录，然后从blog.git仓库 
+    clone 新的博客静态文件。
+    ````
+    #!/bin/bash
+    rm -rf /var/www/blog
+    git clone /root/blog.git /var/www/blog
+    ````
+    - 给post-receive脚本执行权限
+    ````
+    chmod +x ./hooks/post-receive
+    ````
+5. 部署 Hexo 博客             
+    - 修改_config.yml
+    ````
+    deploy:
+        type: git
+        repo: root@ip:blog.git
+    ````
+6. 使用命令部署，hexo d即可
 
 [Next主题网站](http://theme-next.iissnan.com/)
