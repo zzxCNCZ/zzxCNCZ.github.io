@@ -54,3 +54,11 @@ docker run -d -v /usr/docker_file/NginxDemo.war:/usr/local/tomcat/webapps/NginxD
 sudo docker cp generator.war 9732b0d8487d:/tomcat/webapps
 ````
 - docker restart 9732b0d8487d 重启
+
+## Docker进阶使用
+1. 部署将war包与Tomcat镜像打包后，当有代码改动需要更新war包时，需要替换war包，此时可以用进入容器的方法替换
+- 命令:docker exec -it  容器id bash 说明：-t：进入终端；-i：获得一个交互式的连接，通过获取container的输入；bash:在container中启动一个bash shell
+2. 然后就可以像在linux中使用命令了
+3. 退出 Ctrl-D 或者输入exit
+4. 替换容器中的war包，使用
+- 命令：docker cp  本地文件  container-id:path 复制文件
