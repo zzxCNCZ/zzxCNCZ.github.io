@@ -34,7 +34,7 @@ tags:
 id_rsa.pub是公钥id_rsa是私钥
     * 远程到主机，将公钥保存到云主机$HOME/.ssh/authorized_keys文件中（把公钥追加
 到authorized_keys文件末尾），方法：将公钥文件复制到云主机.ssh目录下，然后输入命令
-cat >> .ssh/authorized_keys' < ~/.ssh/id_rsa.pub即可
+cat >> ~/.ssh/authorized_keys < ~/.ssh/id_rsa.pub即可
     * 然后就可以直接用命令登陆 ssh root@ip
     * [参考文章](http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html)
 2. 安装 git 和 nginx
