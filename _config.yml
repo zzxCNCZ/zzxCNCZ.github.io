@@ -79,6 +79,31 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 theme: next
 
+# Live2d
+live2d:
+  enable: true
+  scriptFrom: local
+  pluginRootPath: live2dw/
+  pluginJsPath: lib/
+  pluginModelPath: assets/
+  model:
+    use: live2d-widget-model-hijiki
+  display:
+    position: right
+    width: 150
+    height: 300
+  mobile:
+    show: true
+
+
+symbols_count_time:
+  #文章内是否显示
+  symbols: true
+  time: true
+  # 网页底部是否显示
+  total_symbols: true
+  total_time: true
+
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 ##git@github.com:andybroker/andybroker.github.io.git  https://github.com/zzxCNCZ/zzxCNCZ.github.io.git
