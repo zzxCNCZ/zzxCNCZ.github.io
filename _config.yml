@@ -109,5 +109,5 @@ symbols_count_time:
 ##git@github.com:andybroker/andybroker.github.io.git  https://github.com/zzxCNCZ/zzxCNCZ.github.io.git
 deploy:
   type: git
-  repo: root@47.240.7.198:blog.git
+  repo: root@132.232.74.127:blog.git
   branch: master

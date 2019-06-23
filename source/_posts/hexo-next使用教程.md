@@ -28,7 +28,7 @@ tags:
 * hexo deploy 部署hexo ,主配置文件配置好master分支
 * hexo new "page" 新建md文件。然后编辑
 
-##进阶教程——将博客部署到云主机
+## 进阶教程——将博客部署到云主机
 1. 配置SSH公钥登陆
     * 本机生成ssh key，使用过github的话，就已经生成过了，在根目录下.ssh文件夹内
 id_rsa.pub是公钥id_rsa是私钥
