@@ -3,9 +3,9 @@ title: linux笔记
 date: 2019-06-21 09:16:52
 tags:
 - Linux
-- 笔记
 categories:
 - Linux
+- note
 ---
 ### 文件操作
 

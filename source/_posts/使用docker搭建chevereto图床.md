@@ -2,8 +2,7 @@
 title: 使用docker搭建chevereto图床
 date: 2019-08-04 22:42:48
 categories:
-- Hexo 
-- docker
+- Docker
 tags:
 - 图床
 - tools

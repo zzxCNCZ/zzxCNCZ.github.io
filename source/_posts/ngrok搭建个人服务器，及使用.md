@@ -2,8 +2,9 @@
 title: ngrok搭建个人服务器，及使用
 date: 2018-05-15 16:06:08
 categories:
-- Ngrok
 - 内网穿透
+tags:
+- Ngrok
 ---
 ## ngrok搭建个人节点,条件：
 1. 服务器一台,含公网ip（本文用的阿里云centos）

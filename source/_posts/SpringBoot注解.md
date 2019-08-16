@@ -5,7 +5,6 @@ date: 2018-03-05 15:17:33
 categories:
 - Java
 - SpringBoot
-- Spring
 tags:
 - SpringBoot
 ---

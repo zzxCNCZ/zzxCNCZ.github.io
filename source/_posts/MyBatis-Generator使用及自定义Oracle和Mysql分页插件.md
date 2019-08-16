@@ -4,9 +4,8 @@ date: 2018-04-26 14:20:33
 categories:
 - Java
 - SpringMVC
-- MyBatis
 tags:
-- MyBatis Generator
+- MyBatis
 ---
 ### 用MBG插件生成Pojo，PojoExample(条件类)，--Mapper(dao层接口)，--Mapper.xml文件，并重写PluginAdapter类，生成自定义分页代码。
 ## Maven加入插件，自定义分页插件依赖
