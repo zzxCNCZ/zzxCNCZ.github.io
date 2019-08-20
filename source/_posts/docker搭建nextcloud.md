@@ -180,7 +180,9 @@ docker ps
 1. nextcloud 0770 错误，解决方案
 
    此错误是因为数据挂载的文件夹权限的问题，本文的 db及nextcloud文件夹。需要在安装前把两个文件夹加入www-data用户组（ubuntu系统，别的系统的用户组详见nextcloud官网） 
-
+```shell
+chown -R www-data:www-data db nextcloud
+```
 2. 映射到外网地址后域名访问不了的问题，nextcloud对可访问域名做了限制，需要配置config.php文件的
 
    
@@ -194,4 +196,16 @@ docker ps
        1 => 'yourdomain.com'
     ),
    ```
-
+##### 进阶使用
+使用nextcloud同步文件可以用网页，及客户端（各个平台都支持），但是面对大量文件同步会很慢，本地的话也比较繁琐，有个同步的过程。所有就想到是否可以在本地直接拷贝到nextcloud的data文件夹对应的用户下，
+但事实是，如果直接拷贝进去，在nextcloud网页上是看不到文件的。因为拷贝进去的文件没有录入到nextcloud的数据库中，所以需要手动触发，查过官网文档后发现有个occ工具，可以直接扫描对应用户下的文件到nextcloud的
+数据库中，因为完美解决此问题。
+- 官网文档中对docker中使用occ提供了对应的方式，如下
+- docker方式
+```shell
+$ docker exec --user www-data CONTAINER_ID php occ
+```
+- docker-compose:
+```shell
+$ docker-compose exec --user www-data app php occ
+```
