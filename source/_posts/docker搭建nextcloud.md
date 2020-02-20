@@ -184,6 +184,14 @@ docker ps
 chown -R www-data:www-data db nextcloud
 ```
 2. 映射到外网地址后域名访问不了的问题，nextcloud对可访问域名做了限制，需要配置config.php文件的
+3. 更新nextcloud 出现因为数据库问题无法启动的情况,可能是因为给nextcloud创建的数据库系统权限问题，或者说可能是因为没有创建，可以进入数据库镜像执行：
+```shell script
+create database nextcloud
+
+grant all PRIVILEGES on *nextcloud.* to nextcloud@'%' identified by 'onePassword';
+
+flush privileges;
+```
 
    
 
@@ -197,15 +205,23 @@ chown -R www-data:www-data db nextcloud
     ),
    ```
 ##### 进阶使用
-使用nextcloud同步文件可以用网页，及客户端（各个平台都支持），但是面对大量文件同步会很慢，本地的话也比较繁琐，有个同步的过程。所有就想到是否可以在本地直接拷贝到nextcloud的data文件夹对应的用户下，
+1. 使用nextcloud同步文件可以用网页，及客户端（各个平台都支持），但是面对大量文件同步会很慢，本地的话也比较繁琐，有个同步的过程。所有就想到是否可以在本地直接拷贝到nextcloud的data文件夹对应的用户下，
 但事实是，如果直接拷贝进去，在nextcloud网页上是看不到文件的。因为拷贝进去的文件没有录入到nextcloud的数据库中，所以需要手动触发，查过官网文档后发现有个occ工具，可以直接扫描对应用户下的文件到nextcloud的
 数据库中，因为完美解决此问题。
 - 官网文档中对docker中使用occ提供了对应的方式，如下
 - docker方式
 ```shell
-$ docker exec --user www-data CONTAINER_ID php occ
+$ docker exec --user www-data CONTAINER_ID php occ file:scan  userName  -v
 ```
 - docker-compose:
 ```shell
-$ docker-compose exec --user www-data app php occ
+$ docker-compose exec --user www-data app php occ  file:scan  userName  -v
 ```
+2. 更新 nextcloud 镜像（docker-compose 方式）
+```shell script
+docker-compose build --pull
+
+docker-compose up -d  
+```
+
+* 参考: [nextcloud docker](https://github.com/nextcloud/docker)
