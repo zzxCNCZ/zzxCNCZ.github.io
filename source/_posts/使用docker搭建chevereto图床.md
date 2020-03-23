@@ -20,7 +20,7 @@ tags:
    chmod +x /usr/local/bin/docker-compose
    ```
 
-   
+<!--more-->   
 
 2. 执行
 

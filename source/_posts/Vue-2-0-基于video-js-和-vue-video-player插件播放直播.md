@@ -35,7 +35,7 @@ export default {
 ```
 
 组件代码：
-
+<!--more-->
 ```html
  <videoPlayer v-if="videoLoad" class="vjs-custom-skin videoPlayer"
                    :playsinline="true"

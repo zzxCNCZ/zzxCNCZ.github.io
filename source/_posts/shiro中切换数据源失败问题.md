@@ -48,7 +48,7 @@ public class OAuth2Realm extends AuthorizingRealm {
     }
 }
 ```
-
+<!--more-->
 在认证时，accountService切换了数据源，在service层加了切换注解。
 
 ```jade

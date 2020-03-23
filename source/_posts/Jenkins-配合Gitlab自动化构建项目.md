@@ -18,7 +18,7 @@ jenkins安装gitlab 插件，到插件管理中搜索gitlab
 ![image.png](http://blog.zhuangzexin.top:8082/images/2019/09/26/image.png)
 
 注意安装Gitlab Plugin即可，gitlab hook plugin貌似已经弃用了。
-
+<!--more-->
 配置access token(使jenkins服务器不通过用户名密码访问gitlab api等)，用来通过gitlab webhook通知jenkins自动化构建用的。
 
 在gitlab User Setting 中 Access Tokens中添加

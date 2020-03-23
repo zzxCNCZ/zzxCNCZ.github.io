@@ -24,7 +24,7 @@ vim docker-compose.yml
 ```
 
 docker-compose.yml内容：
-
+<!--more-->
 ```yaml
 version: '2'
 

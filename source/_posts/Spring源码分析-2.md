@@ -30,7 +30,7 @@ tags:
 @Autowired
 private UserService userService;
 ```
-
+<!--more-->
 以上代码依赖注入的一定是UserServiceImpl实例吗？
 
 事实上并不一定，当例如在UserServiceImpl中加入@Transactional 注解，则通过在UserController中调用：

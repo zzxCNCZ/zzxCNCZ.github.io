@@ -16,9 +16,7 @@ ssh-keygen -t rsa -C “bluedrum@qq.com”
 
 cat >> ~/.ssh/authorized_keys < ~/.ssh/id_rsa.pub
 ```
-
-
-
+<!--more-->
 ##### 在docker中运行jenkins
 
 1. 在linux上安装java，git，docker

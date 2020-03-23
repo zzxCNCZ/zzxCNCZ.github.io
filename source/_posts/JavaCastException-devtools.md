@@ -38,6 +38,7 @@ tags:
  }
  }
 ```
+<!--more-->
 - 上面代码中的context 包含和任务执行的entity,但是是个object,需要转换一下，一开始
 - 使用强转,运行到转换的地方就会报出JavaCastException: com.zzx.springboot.modules.job.entity.ScheduleJobEntity can not be casted to
 com.zzx.springboot.modules.job.entity.ScheduleJobEntity

@@ -41,3 +41,10 @@ $ git reset --hard HEAD~<3> #回退到某个版本，比如这里回退到第前
 $ git reset --hard <commit ID> #回退到特定ID的版本
 $ git reflog #记录了每个命令，可以用来查看每个操作的编号
 ```
+### 回滚到历史版本(仅限个人使用) [参考](https://blog.csdn.net/fuchaosz/article/details/52170105)
+```bash
+# 全部回滚不保留修改
+git reset --hard  id
+# 提交到远程
+git push -f
+```

@@ -20,7 +20,7 @@ IOC控制反转( Inversion of Control )
    [依赖倒置原则]: https://www.zhihu.com/question/23277575/answer/169698662?hb_wx_block=0&amp;utm_source=wechat_session&amp;utm_medium=social&amp;utm_oi=551840056621449216	"依赖倒置原则"
 
    
-
+<!--more-->
 2. AOP 面向切面编程
 
    合理使用切面可以大幅度解决交叉模块的复用，使交叉业务模块化，比如日志记录，接口文档，事务。

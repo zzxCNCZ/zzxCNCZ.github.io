@@ -26,6 +26,7 @@ cd lnmp # 如果需要修改目录(安装、数据存储、Nginx日志)，请修
 screen -S lnmp # 如果网路出现中断，可以执行命令`screen -R lnmp`重新连接安装窗口
 ./install.sh
 ```
+<!--more-->
 ![install_oneinstack.png](http://blog.zhuangzexin.top:8082/images/2019/08/16/install_oneinstack.png)- 添加虚拟主机，虚拟主机需要使用域名访问，本地机器可以通过frp映射，域名如果没有https则在建虚拟主机时，选择use http only
 ```
 ./vhost.sh

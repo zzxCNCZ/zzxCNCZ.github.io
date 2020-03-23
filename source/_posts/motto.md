@@ -1,6 +1,6 @@
 ---
 title: motto
-date: 2019-07-31 20:36:18
+date: 2030-07-31 20:36:18
 categories:
 - note
 tags:

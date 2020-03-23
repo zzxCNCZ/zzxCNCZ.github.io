@@ -20,6 +20,7 @@ tags:
     ````
     docker pull  docker.io/tomcat
     ````
+<!--more-->   
 3. 使用Dockerfile创建附带应用的tomcat镜像
     ````
     touch Dockerfile

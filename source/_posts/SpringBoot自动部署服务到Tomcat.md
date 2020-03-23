@@ -22,6 +22,7 @@ tags:
                 </configuration>
             </plugin>
 ```
+<!--more-->
 - http://127.0.0.1:8080为tomcat地址 /manager/text为tomcat script角色页面，manager-script为可以用来部署管理项目文件的角色
 - 配置Tomcat：修改conf/tomcat-users.xml 添加manager-script角色和账户
 ```

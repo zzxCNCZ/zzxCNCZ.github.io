@@ -19,6 +19,7 @@ tags:
 
 * js
 1. 配置`setting`,[ztreeapi](http://www.treejs.cn/v3/main.php#_zTreeInfo)
+<!--more-->
 ```javascript
 
 var zTree, rMenu, imei;  //静态参数，之后用到

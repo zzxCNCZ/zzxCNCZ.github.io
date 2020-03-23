@@ -34,7 +34,7 @@ export default {
   }
 }
 ```
-
+<!--more-->
 组件代码：
 
 ```html

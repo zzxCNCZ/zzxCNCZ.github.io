@@ -20,7 +20,7 @@ sudo apt-get update
 echo y|sudo apt-get install openjdk-8-jdk
 
 ```
-
+<!--more-->
 - Jenkins 安装（这里安装的是服务版本的，可以选择安装docker版本，但是docker版本使用pipline时，用shell语言传输项目包会遇到很多权限等问题）
 
 ```shell

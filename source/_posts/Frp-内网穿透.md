@@ -25,6 +25,7 @@ mv frp_0.25.3_linux_amd64 frp
 cd frp
 ```
 - frps为服务端 frps.ini为简略配置文件 frps_full.ini 为全配置文件，可以按需求修改
+<!--more-->
 ```html
 // frp对外暴露的端口
 bind_port = 7000
