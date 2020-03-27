@@ -1,6 +1,7 @@
 ---
 title: Jenkins自动化部署docker镜像全过程
 date: 2020-03-27 13:55:45
+categories:
 - Jenkins
 - Docker
 tags:
@@ -101,7 +102,6 @@ tags:
       visudo
       # 添加如下内容
       # Allow members of group sudo to execute any command
-      %sudo   ALL=(ALL:ALL) ALL
       # 添加内容如下
       jenkins ALL=(ALL) NOPASSWD: ALL
       
