@@ -45,6 +45,7 @@ git  clone https://github.com/deviantony/docker-elk.git
 
 ```
 - 创建elasticsearch 数据存储路径 ()
+<!--more--> 
 ```shell
 mkdir esdata
 # 配置权限 （必须配置权限，否则会报accessdenied）
