@@ -27,11 +27,11 @@ screen -S lnmp # 如果网路出现中断，可以执行命令`screen -R lnmp`�
 ./install.sh
 ```
 <!--more-->
-![install_oneinstack.png](http://blog.zhuangzexin.top:8082/images/2019/08/16/install_oneinstack.png)- 添加虚拟主机，虚拟主机需要使用域名访问，本地机器可以通过frp映射，域名如果没有https则在建虚拟主机时，选择use http only
+![install_oneinstack.png](https://chevereto.zhuangzexin.top/images/2019/08/16/install_oneinstack.png)- 添加虚拟主机，虚拟主机需要使用域名访问，本地机器可以通过frp映射，域名如果没有https则在建虚拟主机时，选择use http only
 ```
 ./vhost.sh
 ```
-![vhost.png](http://blog.zhuangzexin.top:8082/images/2019/08/16/vhost.png)- 虚拟主机命令
+![vhost.png](https://chevereto.zhuangzexin.top/images/2019/08/16/vhost.png)- 虚拟主机命令
 ```
 ./vhost.sh --del  删除
 ./vhost.sh --list  列表

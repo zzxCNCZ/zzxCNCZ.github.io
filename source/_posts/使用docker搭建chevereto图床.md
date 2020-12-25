@@ -30,7 +30,7 @@ tags:
 
    得到以下结果则安装成功
    
-   ![image.png](http://blog.zhuangzexin.top:8082/images/2019/08/04/image.png)
+   ![image.png](https://chevereto.zhuangzexin.top/images/2019/08/04/image.png)
 
 
 3. 创建chevereto 的`docker-compose.yml`配置文件

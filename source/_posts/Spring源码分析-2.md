@@ -13,7 +13,7 @@ tags:
 
 - BeanDefinition顾名思义bean的定义，它其实是bean定义的一个顶级接口
 
-  [![image.png](http://blog.zhuangzexin.top:8082/images/2019/08/05/image.png)](http://blog.zhuangzexin.top:8082/image/PRs)
+  [![image.png](https://chevereto.zhuangzexin.top/images/2019/08/05/image.png)](https://chevereto.zhuangzexin.top/image/PRs)
 
 - BeanDefinition描述一个bean的实例，跟Class类中的字段、方法描述一个类不同，一个Class类的字段、方法并不能描述如何实例化这个类。如果说，Class类描述了一块猪肉，那么BeanDefinition就是描述如何做红烧肉。
 
@@ -35,15 +35,15 @@ private UserService userService;
 
 事实上并不一定，当例如在UserServiceImpl中加入@Transactional 注解，则通过在UserController中调用：
 
-[![image150fc6c36c598c16.png](http://blog.zhuangzexin.top:8082/images/2019/08/05/image150fc6c36c598c16.png)](http://blog.zhuangzexin.top:8082/image/YdZ)
+[![image150fc6c36c598c16.png](https://chevereto.zhuangzexin.top/images/2019/08/05/image150fc6c36c598c16.png)](https://chevereto.zhuangzexin.top/image/YdZ)
 
 输出的是：
 
-[![image9f894ffa88222190.png](http://blog.zhuangzexin.top:8082/images/2019/08/05/image9f894ffa88222190.png)](http://blog.zhuangzexin.top:8082/image/ckc)
+[![image9f894ffa88222190.png](https://chevereto.zhuangzexin.top/images/2019/08/05/image9f894ffa88222190.png)](https://chevereto.zhuangzexin.top/image/ckc)
 
 而不是预想的：
 
-[![image3795445577e2c32e.png](http://blog.zhuangzexin.top:8082/images/2019/08/05/image3795445577e2c32e.png)](http://blog.zhuangzexin.top:8082/image/FHS)
+[![image3795445577e2c32e.png](https://chevereto.zhuangzexin.top/images/2019/08/05/image3795445577e2c32e.png)](https://chevereto.zhuangzexin.top/image/FHS)
 
 原因是当加入了类似@Transactional 的注解，注入的是CGLib动态代理生成的userServiceImpl的代理对象（动态代理以下描述）。例如加入@Transactional注解，当Spring读取到该注解，便可以开启事务，但UserService中没有包含任何事务的代码，要实现这种功能，则会用到java的动态代理。
 
@@ -72,13 +72,13 @@ SpringAOP动态代理策略是：
 private final Map<String, Object> singletonObjects = new ConcurrentHashMap<String, Object>(256);
 ```
 
-[![imagef85c647c623e6493.png](http://blog.zhuangzexin.top:8082/images/2019/08/05/imagef85c647c623e6493.png)](http://blog.zhuangzexin.top:8082/image/U5u)
+[![imagef85c647c623e6493.png](https://chevereto.zhuangzexin.top/images/2019/08/05/imagef85c647c623e6493.png)](https://chevereto.zhuangzexin.top/image/U5u)
 
 这里的ApplicationContext和BeanFactory是接口，实际上都有各自的子类。比如注解驱动开发时，Spring中最关键的就是AnnotationConfigApplicationContext和DefaultListableBeanFactory。
 
 所以，很多人把Spring理解成一个大Map，还是太浅了。就拿ApplicationContext来讲，它也实现了BeanFactory接口，但是作为容器，其实它是用来包含各种各样的组件的，而不是存bean： 
 
-[![imagee10a0239e36358f1.png](http://blog.zhuangzexin.top:8082/images/2019/08/05/imagee10a0239e36358f1.png)](http://blog.zhuangzexin.top:8082/image/i3d)
+[![imagee10a0239e36358f1.png](https://chevereto.zhuangzexin.top/images/2019/08/05/imagee10a0239e36358f1.png)](https://chevereto.zhuangzexin.top/image/i3d)
 
 那么，Spring是如何给咸鱼加佐料（事务代码的织入）的呢？关键就在于后置处理器。
 
@@ -86,11 +86,11 @@ private final Map<String, Object> singletonObjects = new ConcurrentHashMap<Strin
 
 后置处理器分类：
 
-[![image81c28eff1f0340c5.png](http://blog.zhuangzexin.top:8082/images/2019/08/05/image81c28eff1f0340c5.png)](http://blog.zhuangzexin.top:8082/image/08y)
+[![image81c28eff1f0340c5.png](https://chevereto.zhuangzexin.top/images/2019/08/05/image81c28eff1f0340c5.png)](https://chevereto.zhuangzexin.top/image/08y)
 
 上面BeanFactory、BeanDefinitionRegistryPostProcessor、BeanPostProcessor都算是后置处理器，这里篇幅有限，只介绍一下BeanPostProcessor。
 
-[![imageac7cf6654e97e3cf.png](http://blog.zhuangzexin.top:8082/images/2019/08/05/imageac7cf6654e97e3cf.png)](http://blog.zhuangzexin.top:8082/image/9Df)
+[![imageac7cf6654e97e3cf.png](https://chevereto.zhuangzexin.top/images/2019/08/05/imageac7cf6654e97e3cf.png)](https://chevereto.zhuangzexin.top/image/9Df)
 
 BeanFactoryPostProcessor是用来干预BeanFactory创建的，而BeanPostProcessor是用来干预Bean的实例化。不知道大家有没有试过在普通Bean中注入ApplicationContext实例？你第一时间想到的是：
 
@@ -104,7 +104,7 @@ ApplicationContext annotationConfigApplicationContext;
 
 我们可以让Bean实现ApplicationContextAware接口：
 
-[![image49ef19f40b97d93a.png](http://blog.zhuangzexin.top:8082/images/2019/08/05/image49ef19f40b97d93a.png)](http://blog.zhuangzexin.top:8082/image/1UM)
+[![image49ef19f40b97d93a.png](https://chevereto.zhuangzexin.top/images/2019/08/05/image49ef19f40b97d93a.png)](https://chevereto.zhuangzexin.top/image/1UM)
 
 后期，Spring会调用setApplicationContext()方法传入ApplicationContext实例。
 
@@ -120,7 +120,7 @@ ApplicationContext annotationConfigApplicationContext;
 
 上面这句话有点绕，大家停下来多想几遍。
 
-[![imagef4dd8f861ad65757.png](http://blog.zhuangzexin.top:8082/images/2019/08/05/imagef4dd8f861ad65757.png)](http://blog.zhuangzexin.top:8082/image/3K6)
+[![imagef4dd8f861ad65757.png](https://chevereto.zhuangzexin.top/images/2019/08/05/imagef4dd8f861ad65757.png)](https://chevereto.zhuangzexin.top/image/3K6)
 
 也就是说，要扩展的类是不确定的，但是处理扩展类的流程是写死的。总有一个要定下来吧。也就是说，在这个Bean实例化的某一紧要处，必然要经过很多BeanPostProcessor。但是，BeanPostProcessor也不是谁都处理，有时也会做判断。比如：
 
@@ -263,10 +263,10 @@ public class TestPostProcessor {
 
 先把MyAspectJAutoProxyCreator的@Component注释掉，此时Spring中没有我们自定义的后置处理器，那么返回的就是CalculatorImpl：
 
-[![imageb1f7e13b90d1d598.png](http://blog.zhuangzexin.top:8082/images/2019/08/05/imageb1f7e13b90d1d598.png)](http://blog.zhuangzexin.top:8082/image/bdv)
+[![imageb1f7e13b90d1d598.png](https://chevereto.zhuangzexin.top/images/2019/08/05/imageb1f7e13b90d1d598.png)](https://chevereto.zhuangzexin.top/image/bdv)
 
 把@Component加上，此时MyAspectJAutoProxyCreator加入到Spring的BeanPostProcessors中，会拦截到CalculatorImpl，并返回代理对象：
 
-[![image7d5d698b2e5f6eb3.png](http://blog.zhuangzexin.top:8082/images/2019/08/05/image7d5d698b2e5f6eb3.png)](http://blog.zhuangzexin.top:8082/image/ekq)
+[![image7d5d698b2e5f6eb3.png](https://chevereto.zhuangzexin.top/images/2019/08/05/image7d5d698b2e5f6eb3.png)](https://chevereto.zhuangzexin.top/image/ekq)
 
 代理对象的add()方法被增强：前后打印日志

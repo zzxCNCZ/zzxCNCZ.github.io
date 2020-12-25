@@ -30,7 +30,7 @@ tags:
    fdisk -l
    ```
 
-   [![image.png](http://blog.zhuangzexin.top:8082/images/2019/08/14/image.png)](http://blog.zhuangzexin.top:8082/image/aUn)
+   [![image.png](https://chevereto.zhuangzexin.top/images/2019/08/14/image.png)](https://chevereto.zhuangzexin.top/image/aUn)
 
 4. 可以看到上图一共两块硬盘，下面/dev/sda为我的移动硬盘，此移动硬盘有两个分区。一块是/dev/sda1（ntfs格式），一块是/dev/sda2（linux文件格式）。接下来就是要将/dev/sda2 挂载到linux系统上。
 
@@ -79,11 +79,11 @@ tags:
 
 2. 完成上述操作后可以看到目录结构如下：
 
-   [![image5e5db68cc89c4748.png](http://blog.zhuangzexin.top:8082/images/2019/08/14/image5e5db68cc89c4748.png)](http://blog.zhuangzexin.top:8082/image/oZ4)
+   [![image5e5db68cc89c4748.png](https://chevereto.zhuangzexin.top/images/2019/08/14/image5e5db68cc89c4748.png)](https://chevereto.zhuangzexin.top/image/oZ4)
 
 3. 修改db.env
 
-   [![imagefc47b6066176694e.png](http://blog.zhuangzexin.top:8082/images/2019/08/14/imagefc47b6066176694e.png)](http://blog.zhuangzexin.top:8082/image/yWi)
+   [![imagefc47b6066176694e.png](https://chevereto.zhuangzexin.top/images/2019/08/14/imagefc47b6066176694e.png)](https://chevereto.zhuangzexin.top/image/yWi)
 
 4. 修改docker-compose.yml内容如下
 
@@ -165,7 +165,7 @@ tags:
 
 等待安装完毕，过程中可能因为网络问题没有安装成功，重试即可
 
-[![imagec129199d783b0ea7.png](http://blog.zhuangzexin.top:8082/images/2019/08/14/imagec129199d783b0ea7.png)](http://blog.zhuangzexin.top:8082/image/LPs)
+[![imagec129199d783b0ea7.png](https://chevereto.zhuangzexin.top/images/2019/08/14/imagec129199d783b0ea7.png)](https://chevereto.zhuangzexin.top/image/LPs)
 
 安装完毕，查看运行状况：
 
@@ -195,7 +195,7 @@ flush privileges;
 
    
 
-   [![image71206172e30ec25a.png](http://blog.zhuangzexin.top:8082/images/2019/08/14/image71206172e30ec25a.png)](http://blog.zhuangzexin.top:8082/image/RmZ)
+   [![image71206172e30ec25a.png](https://chevereto.zhuangzexin.top/images/2019/08/14/image71206172e30ec25a.png)](https://chevereto.zhuangzexin.top/image/RmZ)
 
    ```shell
    'trusted_domains' =>
