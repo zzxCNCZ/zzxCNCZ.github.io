@@ -102,6 +102,14 @@ live2d:
     show: true
 
 
+# 本地搜索`
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 100
+
+
 symbols_count_time:
   #文章内是否显示
   symbols: true

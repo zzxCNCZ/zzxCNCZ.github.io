@@ -19,8 +19,8 @@ override: false
 # For example, you put your favicons into `hexo-site/source/images` directory.
 # Then need to rename & redefine they on any other names, otherwise icons from Next will rewrite your custom icons in Hexo.
 favicon:
-  small: /images/favicon-16x16-next.png
-  medium: /images/favicon-32x32-next.png
+  small: /images/banksy.ico
+  medium: /images/banksy.ico
   apple_touch_icon: /images/apple-touch-icon-next.png
   safari_pinned_tab: /images/logo.svg
   #android_manifest: /images/manifest.json
@@ -46,13 +46,13 @@ footer:
   copyright:
   # -------------------------------------------------------------
   # Hexo link (Powered by Hexo).
-  powered: true
+  powered: false
 
   theme:
     # Theme & scheme info link (Theme - NexT.scheme).
-    enable: true
+    enable: false
     # Version info of NexT after scheme info (vX.X.X).
-    version: true
+    version: false
   # -------------------------------------------------------------
   # Any custom text can be defined here.
   #custom_text: Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a>
@@ -67,7 +67,7 @@ footer:
 canonical: true
 
 # Change headers hierarchy on site-subtitle (will be main site description) and on all post/pages titles for better SEO-optimization.
-seo: false
+seo: true
 
 # If true, will add site-subtitle to index page, added in main hexo config.
 # subtitle: Subtitle
@@ -130,7 +130,7 @@ social:
   #Instagram: https://instagram.com/yourname || instagram
   #Skype: skype:yourname?call|chat || skype
   Github: https://github.com/zzxCNCZ
-  E-Mail: mailto:zhuangzexin@foxmail.com
+  E-Mail: mailto:zhuang1994123@gmail.com
 
 social_icons:
   enable: true
@@ -600,7 +600,7 @@ algolia_search:
 # Local search
 # Dependencies: https://github.com/flashlab/hexo-generator-search
 local_search:
-  enable: false
+  enable: true
   # if auto, trigger search by changing input
   # if manual, trigger search by pressing enter key or search button
   trigger: auto
@@ -820,3 +820,5 @@ symbols_count_time:
   awl: 4
   # Words Per Minute
   wpm: 275
+
+
