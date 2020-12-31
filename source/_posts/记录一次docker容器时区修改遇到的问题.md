@@ -59,7 +59,7 @@ RUN  apk add --no-cache tzdata && ln -sf /usr/share/zoneinfo/$TZ /etc/localtime 
 
 ```
 结果：构建失败，因为防火墙的问题，我无法下载安装包（哭了）。
-![image.png](http://blog.zhuangzexin.top:8082/images/2020/07/23/image.png)
+![image.png](https://chevereto.zhuangzexin.top/images/2020/07/23/image.png)
 
 此处其实可以设置fq代理，但是因为需要在服务器上构建，我不能fq，因此这个办法行不通。
 

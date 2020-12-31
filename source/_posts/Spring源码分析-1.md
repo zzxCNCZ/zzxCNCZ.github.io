@@ -13,7 +13,7 @@ IOC控制反转( Inversion of Control )
 
 1. 为何要用IOC控制反转？IOC是什么
 
-   [![image0548234a76d3d557.png](https://chevereto.zhuangzexin.top/images/2019/08/04/image0548234a76d3d557.png)](http://blog.zhuangzexin.top:8082/image/EV4) （1）
+   [![image0548234a76d3d557.png](https://chevereto.zhuangzexin.top/images/2019/08/04/image0548234a76d3d557.png)](https://chevereto.zhuangzexin.top/image/EV4) （1）
 
    [^1]: 上图基本上解释了IOC原理，IOC即通过依赖倒置原则（依赖注入），将bean交给spring管理，从而避免了每次使用bean时都需要new 一个对象的痛点。
 
@@ -25,7 +25,7 @@ IOC控制反转( Inversion of Control )
 
    合理使用切面可以大幅度解决交叉模块的复用，使交叉业务模块化，比如日志记录，接口文档，事务。
 
-   [![imagedec2c40ef7138621.png](http://blog.zhuangzexin.top:8082/images/2019/08/04/imagedec2c40ef7138621.png)](http://blog.zhuangzexin.top:8082/image/dKi)
+   [![imagedec2c40ef7138621.png](https://chevereto.zhuangzexin.top/images/2019/08/04/imagedec2c40ef7138621.png)](https://chevereto.zhuangzexin.top/image/dKi)
 
    
 

@@ -188,7 +188,7 @@ docker-compose restart
 ```
 ##### Kibana 控制台
 - 使用服务器IP+端口5601访问，账户为elastic 密码为上面生成的密码。
-![image.png](http://blog.zhuangzexin.top:8082/images/2020/07/09/image.png)
+![image.png](https://chevereto.zhuangzexin.top/images/2020/07/09/image.png)
 
 [reference](https://juejin.im/post/5eaff5506fb9a04359028827)
 [elk-docker-github](https://github.com/deviantony/docker-elk)
