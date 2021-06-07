@@ -3,9 +3,10 @@ title: 使用docker搭建chevereto图床
 date: 2019-08-04 22:42:48
 categories:
 - Docker
+- Tools
 tags:
+- Docker
 - 图床
-- tools
 ---
 ##### 平时写博客等需要引用到图片，目前有多种存放图片的方式如七牛云等oss云存储，还有一些免费的图床网站，但这些都不是自主化部署，用起来还是会有一些不适，所以通过docker来搭建一个基于（chevereto）私人图床。
 
