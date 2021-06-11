@@ -15,7 +15,7 @@ tags:
 步骤如下:
 
 ![image27ecfe870fe31e16.png](https://chevereto.zhuangzexin.top/images/2021/06/11/image27ecfe870fe31e16.png)
-
+<!--more-->
 1. 添加release分支
 ```bash
 git branch release && git checkout release
