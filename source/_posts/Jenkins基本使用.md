@@ -3,7 +3,7 @@ title: Jenkins基本使用
 date: 2019-09-18 21:23:14
 categories:
 - Jenkins
-- 基本使用
+- Usage
 tags:
 - Jenkins
 ---

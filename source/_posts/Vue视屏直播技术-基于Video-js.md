@@ -2,7 +2,8 @@
 title: Vue视屏直播技术(基于Video.js)
 date: 2020-02-20 11:10:00
 categories:
-- Vue 2.0
+- Javascript
+- Vue
 tags:
 - 前端
 - Video-js

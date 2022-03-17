@@ -2,8 +2,8 @@
 title: Jenkins自动化部署docker镜像全过程
 date: 2020-03-27 13:55:45
 categories:
-- Jenkins
 - Docker
+- Jenkins
 tags:
 - Jenkins
 ---

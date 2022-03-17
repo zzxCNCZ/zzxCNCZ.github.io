@@ -2,8 +2,8 @@
 title: Mysql slave 1872问题
 date: 2021-11-05 16:21:48
 categories:
-- Mysql
-  tags:
+- Mysql 
+tags:
 - sql
 ---
 

@@ -2,8 +2,10 @@
 title: Gitlab私有git服务器安装(docker版)
 date: 2020-02-20 11:08:05
 categories:
+- Docker
 - Gitlab
 tags:
+- Docker
 ---
 ##### 安装要求
 

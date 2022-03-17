@@ -2,9 +2,10 @@
 title: oneindex-基于onedrive的私人网盘
 date: 2019-08-16 09:05:22
 categories:
-- The Cloud
+- Tools
+- oneindex
 tags:
-- hobby
+- storage
 ---
 ## oneindex安装及使用
 #### 使用lnmp搭建使用环境

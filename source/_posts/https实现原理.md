@@ -2,7 +2,7 @@
 title: https实现原理
 date: 2021-07-14 09:22:30
 categories:
-- Http
+- Note
 tags:
 - https
 - ssl

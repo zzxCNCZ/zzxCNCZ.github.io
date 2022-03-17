@@ -3,10 +3,10 @@ title: SpringBoot 使用线程池批量插入数据
 date: 2020-07-09 15:57:15
 categories:
 - Java
-- SpringBoot
-- 多线程
+- Thread
 tags:
 - SpringBoot
+- Thread
 ---
 #### SpringBoot 使用线程池批量插入数据
 

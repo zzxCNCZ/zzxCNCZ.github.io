@@ -2,6 +2,7 @@
 title: jenkins持续交付实际应用
 date: 2021-06-11 17:20:47
 categories:
+- DevOps
 - Jenkins
 tags:
 - Jenkins

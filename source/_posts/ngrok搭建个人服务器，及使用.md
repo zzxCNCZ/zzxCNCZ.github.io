@@ -2,7 +2,8 @@
 title: ngrok搭建个人服务器，及使用
 date: 2018-05-15 16:06:08
 categories:
-- 内网穿透
+- Tools
+- ngrok
 tags:
 - Ngrok
 ---

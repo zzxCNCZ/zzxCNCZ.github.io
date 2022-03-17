@@ -2,6 +2,7 @@
 title: axios下载文件总结
 date: 2018-08-03 17:01:44
 categories:
+- Javascript
 - Vue
 tags:
 - axios

@@ -2,7 +2,7 @@
 title: Jenkins自动化部署Vue项目前端及后端
 date: 2019-09-18 21:23:44
 categories:
-- Jenkins
+- DevOps
 - Vue项目部署
 tags:
 - Jenkins

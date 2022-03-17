@@ -2,7 +2,8 @@
 title: Vue 2.0 基于video.js 和 vue-video-player插件播放直播
 date: 2019-09-05 09:30:37
 categories:
-- Vue 2.0
+- Javascript
+- Vue
 tags:
 - 前端
 ---

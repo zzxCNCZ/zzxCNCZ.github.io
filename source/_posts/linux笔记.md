@@ -5,7 +5,6 @@ tags:
 - Linux
 categories:
 - Linux
-- note
 ---
 ### 文件操作
 
