@@ -1,5 +1,5 @@
 ---
-title: flink教程(1)-基本概念
+title: flink学习(1)-基本概念
 date: 2023-03-30 10:28:23
 categories:
 - flink 
