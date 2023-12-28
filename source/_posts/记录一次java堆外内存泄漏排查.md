@@ -46,3 +46,7 @@ bash-4.4# jmap -dump:format=b,file=dumpfile.hprof 1
 ```bash
 jcmd 1 VM.native_memory
 ```
+
+
+[Fixing Java's ByteBuffer native memory "leak"](https://www.evanjones.ca/java-bytebuffer-leak.html)
+[openjdk nio utils](https://github.com/AdoptOpenJDK/openjdk-jdk11/blob/master/src/java.base/share/classes/sun/nio/ch/Util.java)
