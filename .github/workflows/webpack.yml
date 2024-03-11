@@ -27,3 +27,32 @@ jobs:
         npm install
         npm install -g hexo@3.9.0
         hexo g
+        tar zcvf blog.tar -C  public .
+
+    - name: copy file 
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY}}
+        port: ${{ secrets.PORT }}
+        source: "blog.tar"
+        target: /home/ubuntu
+
+    - name: Deploy
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY}}
+        port: ${{ secrets.PORT }}
+        script: |
+          echo '================begin======================'
+          pwd
+          echo '================rm======================'
+          rm -rf /home/ubuntu/blog/*
+          echo '================cd======================'
+          #cd /home/ubuntu
+          echo '================tar======================'
+          tar zxvf blog.tar -C blog 
+          echo '================end======================'
